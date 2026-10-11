@@ -1,3 +1,4 @@
+import { DEMO } from './config.js';
 // Accès à l'API d'administration. Cookie de session HttpOnly + en-tête CSRF pour toute écriture.
 export const session = { csrf: '', email: '' };
 let onLost = () => {};
@@ -8,6 +9,7 @@ export class ApiError extends Error {
 }
 
 export async function api(action, { method = 'GET', body, query } = {}) {
+  if (DEMO) { const { demoApi } = await import('./demo.js'); return demoApi(action, { method, body, query }); }
   const qs = query ? '?' + new URLSearchParams(Object.entries(query).filter(([, v]) => v !== undefined && v !== null && v !== '')) : '';
   const headers = { Accept: 'application/json' };
   if (method !== 'GET' || action === 'export') headers['x-csrf-token'] = session.csrf;

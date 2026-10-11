@@ -11,6 +11,7 @@ import * as packages from './views/packages.js';
 import * as health from './views/health.js';
 import * as audit from './views/audit.js';
 import { initLogin } from './login.js';
+import { DEMO } from './config.js';
 
 const ROUTES = {
   dashboard: { title: 'Tableau de bord', icon: 'home', view: dashboard },
@@ -77,6 +78,10 @@ initSheet();
 initLogin(startApp);
 
 (async () => {
+  if (DEMO) {
+    document.querySelector('[data-demo]').hidden = false; $('[data-logout]').hidden = true; session.csrf = 'demo';
+    return startApp('Mode démonstration');
+  }
   try { const r = await fetch('/api/admin/me', { credentials: 'same-origin' }); if (r.ok) { const d = await r.json(); session.csrf = d.csrf; return startApp(d.email); } } catch { /* */ }
   showLogin();
 })();
