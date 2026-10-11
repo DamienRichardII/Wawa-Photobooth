@@ -26,6 +26,8 @@ const NAV = [
   ['a-propos', '/a-propos/', 'À propos'],
   ['contact', '/contact/', 'Contact']
 ];
+// En-tête : navigation principale ; « À propos » et « Contact » sont dans le pied de page uniquement.
+const HEADER_KEYS = ['accueil', 'formules', 'galerie', 'reservation'];
 const SOCIAL = [['instagram', 'Instagram'], ['tiktok', 'TikTok'], ['snapchat', 'Snapchat']];
 
 function socialList(cls) {
@@ -35,7 +37,7 @@ function socialList(cls) {
 }
 
 function header(active) {
-  const links = NAV.map(([key, href, label]) => `<li><a href="${href}"${key === active ? ' aria-current="page"' : ''}>${label}</a></li>`).join('');
+  const links = NAV.filter(([key]) => HEADER_KEYS.includes(key)).map(([key, href, label]) => `<li><a href="${href}"${key === active ? ' aria-current="page"' : ''}>${label}</a></li>`).join('');
   return `<a class="skip-link" href="#main">Aller au contenu principal</a>
 <header class="site-header" data-header>
   <div class="container header-inner">
