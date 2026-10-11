@@ -22,3 +22,5 @@ Avis clients : aucun fourni, donc aucun affiché.
 ## Configuration technique
 - Projet Supabase (région UE), variables d'environnement (`.env.example`), clé Resend + domaine d'envoi, secret TOTP admin, `siteUrl`, domaine.
 - Tests restants avant production : lecteur d'écran, audit de sécurité, test de restauration des sauvegardes.
+
+- Administration : confirmer la liste des personnes habilitées (actuellement wawaphotobooth77@gmail.com et damien.miyouna@gmail.com), l'adresse e-mail de notification de l'équipe et la durée de conservation des demandes (RETENTION_MONTHS).

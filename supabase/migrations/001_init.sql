@@ -54,7 +54,8 @@ create table if not exists public.booking_request_events (
   kind text not null,
   from_status text,
   to_status text,
-  actor text
+  actor text,
+  note_encrypted text                   -- note interne chiffrée (AES-256-GCM) — ajouté par 003 sur les bases existantes
 );
 create index if not exists booking_request_events_req_idx on public.booking_request_events (request_id, created_at);
 
@@ -80,6 +81,7 @@ create table if not exists public.admin_audit (
 );
 create index if not exists admin_audit_fail_idx on public.admin_audit (action, created_at);
 
+-- admin_users : voir 004_admin_users.sql
 create table if not exists public.admin_totp_steps (
   step bigint primary key,
   used_at timestamptz not null default now()

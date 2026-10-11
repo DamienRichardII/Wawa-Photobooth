@@ -11,7 +11,7 @@ const totp = require('../../lib/totp');
 
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'wawa-'));
 const STORE_FILE = path.join(tmp, 'store.json');
-const ENV_KEYS = ['STORAGE_DRIVER', 'DEV_STORE_FILE', 'SESSION_SECRET', 'ADMIN_EMAIL', 'ADMIN_PASSWORD_HASH', 'ADMIN_TOTP_SECRET', 'DATA_ENCRYPTION_KEY', 'MIN_FILL_MS', 'VERCEL', 'NODE_ENV', 'RESEND_API_KEY', 'NOTIFY_EMAIL_TO', 'CRON_SECRET', 'RETENTION_MONTHS'];
+const ENV_KEYS = ['STORAGE_DRIVER', 'DEV_STORE_FILE', 'SESSION_SECRET', 'ADMIN_EMAIL', 'ADMIN_PASSWORD_HASH', 'ADMIN_TOTP_SECRET', 'DATA_ENCRYPTION_KEY', 'MIN_FILL_MS', 'VERCEL', 'NODE_ENV', 'RESEND_API_KEY', 'NOTIFY_EMAIL_TO', 'CRON_SECRET', 'RETENTION_MONTHS', 'SUPABASE_URL', 'SUPABASE_PUBLISHABLE_KEY'];
 function setEnv(o) { for (const k of ENV_KEYS) delete process.env[k]; Object.assign(process.env, o); resetBackend(); rl.reset(); }
 
 const server = require('../../server');
@@ -173,6 +173,25 @@ test('administration : authentification, TOTP à usage unique, CSRF, verrouillag
   const d2 = await (await getJson('/api/admin/request?id=' + item.id, { cookie: ck })).json();
   assert.equal(d2.request.status, 'a-contacter');
   assert.ok(d2.events.some((e) => e.kind === 'status' && e.to_status === 'a-contacter'));
+  // notes internes chiffrées + trace de contact
+  r = await post('/api/admin/note', { id: item.id, text: 'Rappeler jeudi' }, { cookie: ck });
+  assert.equal(r.status, 403, 'CSRF requis pour les notes');
+  r = await post('/api/admin/note', { id: item.id, text: '' }, { cookie: ck, 'x-csrf-token': csrf });
+  assert.equal(r.status, 422, 'note vide sans canal refusée');
+  r = await post('/api/admin/note', { id: item.id, text: 'x', channel: 'pigeon' }, { cookie: ck, 'x-csrf-token': csrf });
+  assert.equal(r.status, 422, 'canal inconnu refusé');
+  r = await post('/api/admin/note', { id: item.id, text: 'Rappeler jeudi <b>soir</b>' }, { cookie: ck, 'x-csrf-token': csrf });
+  assert.equal(r.status, 201);
+  r = await post('/api/admin/note', { id: item.id, channel: 'phone' }, { cookie: ck, 'x-csrf-token': csrf });
+  assert.equal(r.status, 201);
+  const d3 = await (await getJson('/api/admin/request?id=' + item.id, { cookie: ck })).json();
+  assert.ok(d3.events.some((e) => e.kind === 'note' && e.note === 'Rappeler jeudi <b>soir</b>'));
+  assert.ok(d3.events.some((e) => e.kind === 'contact' && e.to_status === 'phone'));
+  assert.ok(!fs.readFileSync(process.env.DEV_STORE_FILE, 'utf8').includes('Rappeler jeudi'), 'note jamais en clair dans le stockage');
+  // état de la configuration : booléens, aucun secret
+  const health = await (await getJson('/api/admin/health', { cookie: ck })).json();
+  assert.ok(Array.isArray(health.checks) && health.checks.length >= 5);
+  assert.ok(!JSON.stringify(health).includes(process.env.SESSION_SECRET));
   // origine étrangère refusée même avec CSRF
   r = await post('/api/admin/status', { id: item.id, status: 'confirmee' }, { cookie: ck, 'x-csrf-token': csrf, origin: 'https://evil.example' });
   assert.equal(r.status, 403);
@@ -211,4 +230,66 @@ test('en-têtes de sécurité (CSP) sur pages et API', async () => {
   const r = await fetch(base + '/api/packages');
   assert.match(r.headers.get('content-security-policy'), /default-src 'self'/);
   assert.equal(r.headers.get('x-content-type-options'), 'nosniff');
+});
+
+test('administration via Supabase Auth : liste blanche, MFA obligatoire, enrôlement', async () => {
+  const realFetch = global.fetch;
+  const users = {
+    'ok@example.com': { id: '11111111-1111-4111-8111-111111111111', pw: 'pw-ok', factors: [{ id: '22222222-2222-4222-8222-222222222222', factor_type: 'totp', status: 'verified' }] },
+    'new@example.com': { id: '33333333-3333-4333-8333-333333333333', pw: 'pw-new', factors: [] },
+    'intrus@example.com': { id: '44444444-4444-4444-8444-444444444444', pw: 'pw-x', factors: [{ id: '55555555-5555-4555-8555-555555555555', factor_type: 'totp', status: 'verified' }] }
+  };
+  const enrolled = new Set();
+  global.fetch = async (url, init = {}) => {
+    const u = String(url);
+    if (!u.startsWith('https://proj.supabase.co/auth/v1/')) return realFetch(url, init);
+    const j = (status, data) => ({ ok: status < 300, status, json: async () => data });
+    const b = init.body ? JSON.parse(init.body) : {};
+    if (u.includes('/token?grant_type=password')) {
+      const us = users[b.email];
+      if (!us || us.pw !== b.password) return j(400, { error: 'invalid_grant' });
+      const factors = us.factors.concat(enrolled.has(b.email) ? [{ id: 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa', factor_type: 'totp', status: 'verified' }] : []);
+      return j(200, { access_token: 'tok-' + b.email, user: { id: us.id, email: b.email, email_confirmed_at: '2026-01-01', factors } });
+    }
+    if (u.endsWith('/factors')) return j(200, { id: 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa', totp: { secret: 'JBSWY3DPEHPK3PXP', uri: 'otpauth://totp/x', qr_code: 'data:image/svg+xml;utf-8,<svg/>' } });
+    if (u.endsWith('/challenge')) return j(200, { id: 'ch-1' });
+    if (u.endsWith('/verify')) { if (b.code === '123456') { if (init.headers.Authorization === 'Bearer tok-new@example.com') enrolled.add('new@example.com'); return j(200, {}); } return j(400, {}); }
+    return j(404, {});
+  };
+  try {
+    setEnv({ STORAGE_DRIVER: 'file', DEV_STORE_FILE: STORE_FILE, MIN_FILL_MS: '50', SESSION_SECRET: 'x'.repeat(48), SUPABASE_URL: 'https://proj.supabase.co', SUPABASE_PUBLISHABLE_KEY: 'sb_publishable_' + 'k'.repeat(30) });
+    fs.writeFileSync(STORE_FILE, JSON.stringify({ admin_users: [{ email: 'ok@example.com', role: 'admin' }, { email: 'new@example.com', role: 'admin' }] }));
+    resetBackend();
+    const sc = await (await fetch(base + '/api/admin/status-check')).json();
+    assert.equal(sc.configured, true); assert.equal(sc.mode, 'supabase');
+    // mauvais mot de passe, non autorisé : même réponse générique
+    for (const [email, password] of [['ok@example.com', 'faux'], ['intrus@example.com', 'pw-x'], ['inconnu@example.com', 'x']]) {
+      const r = await post('/api/admin/login', { email, password, code: '123456' });
+      assert.equal(r.status, 401); assert.equal((await r.json()).error, 'invalid_credentials');
+    }
+    // code manquant / faux
+    assert.equal((await post('/api/admin/login', { email: 'ok@example.com', password: 'pw-ok', code: '' })).status, 401);
+    assert.equal((await post('/api/admin/login', { email: 'ok@example.com', password: 'pw-ok', code: '000000' })).status, 401);
+    // succès
+    let r = await post('/api/admin/login', { email: 'ok@example.com', password: 'pw-ok', code: '123456' });
+    assert.equal(r.status, 200);
+    const d = await r.json(); assert.equal(d.email, 'ok@example.com');
+    const cookie = r.headers.get('set-cookie').split(';')[0];
+    assert.equal((await fetch(base + '/api/admin/me', { headers: { cookie } })).status, 200);
+    // sans MFA : enrôlement requis, jamais de session
+    r = await post('/api/admin/login', { email: 'new@example.com', password: 'pw-new', code: '' });
+    assert.equal(r.status, 403); assert.equal((await r.json()).error, 'mfa_enrollment_required'); assert.ok(!r.headers.get('set-cookie'));
+    // enrôlement refusé pour un compte déjà protégé ou non autorisé
+    assert.equal((await post('/api/admin/mfa-enroll', { email: 'ok@example.com', password: 'pw-ok' })).status, 409);
+    assert.equal((await post('/api/admin/mfa-enroll', { email: 'intrus@example.com', password: 'pw-x' })).status, 401);
+    r = await post('/api/admin/mfa-enroll', { email: 'new@example.com', password: 'pw-new' });
+    assert.equal(r.status, 200);
+    const f = await r.json(); assert.ok(f.secret && f.factor_id);
+    assert.equal((await post('/api/admin/mfa-verify', { email: 'new@example.com', password: 'pw-new', factor_id: f.factor_id, code: '000000' })).status, 401);
+    r = await post('/api/admin/mfa-verify', { email: 'new@example.com', password: 'pw-new', factor_id: f.factor_id, code: '123456' });
+    assert.equal(r.status, 200); assert.ok(r.headers.get('set-cookie'));
+    // un compte retiré de la liste blanche perd l'accès
+    fs.writeFileSync(STORE_FILE, JSON.stringify({ admin_users: [] }));
+    assert.equal((await fetch(base + '/api/admin/me', { headers: { cookie } })).status, 401);
+  } finally { global.fetch = realFetch; }
 });

@@ -5,36 +5,72 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Administration — WAWA PHOTOBOOTH</title>
 <meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
 <link rel="icon" href="/media/icons/favicon-32.png" type="image/png">
 <link rel="stylesheet" href="/css/base.css">
 <link rel="stylesheet" href="/css/admin.css">
 <script src="/js/boot.js"></script>
 </head>
 <body class="admin">
-<main id="app" class="adm">
-  <section data-view="login" hidden>
-    <form class="adm-login" id="login-form" autocomplete="on" novalidate>
-      <h1>Administration</h1>
-      <p class="muted">Accès réservé aux personnes habilitées.</p>
-      <div class="adm-notice" data-config-warning hidden></div>
-      <label>Email<input type="email" name="email" autocomplete="username" required></label>
-      <label>Mot de passe<input type="password" name="password" autocomplete="current-password" required></label>
-      <label>Code à 6 chiffres (application d’authentification)<input type="text" name="code" inputmode="numeric" autocomplete="one-time-code" maxlength="8"></label>
-      <p class="adm-error" role="alert" data-login-error hidden></p>
-      <button class="btn btn--gold" type="submit">Se connecter</button>
-    </form>
-  </section>
-  <section data-view="dash" hidden>
-    <header class="adm-top">
-      <strong>WAWA PHOTOBOOTH · Admin</strong>
-      <nav aria-label="Sections" class="adm-tabs" data-tabs></nav>
-      <span class="muted" data-who></span>
-      <button class="btn btn--outline btn--sm" type="button" data-logout>Se déconnecter</button>
+<a class="skip-link" href="#main">Aller au contenu</a>
+
+<!-- Connexion -->
+<section class="login" data-view="login" hidden>
+  <form class="login__card" id="login-form" autocomplete="on" novalidate>
+    <img src="/media/img/logo-embleme-clair.webp" width="760" height="635" alt="WAWA PHOTOBOOTH" class="login__logo">
+    <h1>Espace administration</h1>
+    <p class="muted">Accès réservé aux personnes habilitées.</p>
+    <p class="notice-box notice-box--warn" data-config-warning hidden></p>
+    <p class="notice-box" data-session-msg hidden></p>
+    <label>Email<input type="email" name="email" autocomplete="username" required></label>
+    <label>Mot de passe<input type="password" name="password" autocomplete="current-password" required></label>
+    <label>Code à 6 chiffres <span class="muted">(application d’authentification)</span><input type="text" name="code" inputmode="numeric" autocomplete="one-time-code" maxlength="8" pattern="[0-9 ]*"></label>
+    <p class="error-text" role="alert" data-login-error hidden></p>
+    <button class="abtn abtn--gold abtn--lg" type="submit">Se connecter</button>
+    <p class="login__foot muted">Connexion protégée : double authentification, session limitée à 2 h, journal des accès.</p>
+  </form>
+  <form class="login__card" id="enroll-form" autocomplete="off" novalidate hidden>
+    <h1>Activer la double authentification</h1>
+    <p class="muted">Première connexion : scannez ce QR code avec une application d’authentification (Google Authenticator, Authy, 1Password…), puis saisissez le code à 6 chiffres affiché.</p>
+    <img data-enroll-qr class="login__qr" width="200" height="200" alt="QR code à scanner" hidden>
+    <p class="muted">Ou saisissez cette clé manuellement : <code data-enroll-secret></code></p>
+    <label>Code à 6 chiffres<input type="text" name="code" inputmode="numeric" autocomplete="one-time-code" maxlength="8" pattern="[0-9 ]*" required></label>
+    <p class="error-text" role="alert" data-enroll-error hidden></p>
+    <button class="abtn abtn--gold abtn--lg" type="submit">Activer et se connecter</button>
+    <button class="abtn" type="button" data-enroll-cancel>Annuler</button>
+  </form>
+</section>
+
+<!-- Application -->
+<div class="shell" data-view="app" hidden>
+  <aside class="side" id="side" aria-label="Menu d’administration">
+    <div class="side__brand"><img src="/media/img/logo-embleme-clair.webp" width="760" height="635" alt="WAWA PHOTOBOOTH"><span>Administration</span></div>
+    <nav class="side__nav" data-nav></nav>
+    <div class="side__foot">
+      <span class="side__me" data-who></span>
+      <button class="abtn abtn--ghost abtn--sm" type="button" data-logout><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-logout"/></svg>Se déconnecter</button>
+    </div>
+  </aside>
+  <div class="main-col">
+    <header class="top">
+      <button class="top__menu" type="button" data-menu aria-controls="side" aria-expanded="false" aria-label="Ouvrir le menu"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-menu"/></svg></button>
+      <h1 class="top__title" data-title>Tableau de bord</h1>
+      <form class="top__search" role="search" data-search-form>
+        <svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-search"/></svg>
+        <input type="search" name="q" placeholder="Rechercher une demande (nom, email, référence…)" aria-label="Rechercher une demande" autocomplete="off">
+      </form>
+      <button class="abtn abtn--ghost abtn--sm top__refresh" type="button" data-refresh title="Actualiser"><span data-updated>Actualiser</span></button>
     </header>
-    <div class="adm-notice" data-flash role="status" hidden></div>
-    <div data-panel></div>
-  </section>
-</main>
-<script type="module" src="/js/admin.js"></script>
+    <div class="toasts" data-toasts role="status" aria-live="polite"></div>
+    <main id="main" class="content" tabindex="-1" data-content></main>
+  </div>
+</div>
+
+<!-- Fiche d’une demande (panneau latéral) -->
+<dialog class="sheet" data-sheet aria-labelledby="sheet-title"></dialog>
+<!-- Boîte de confirmation -->
+<dialog class="confirm" data-confirm></dialog>
+
+<script type="module" src="/js/admin/main.js"></script>
 </body>
 </html>
