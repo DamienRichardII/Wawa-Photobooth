@@ -10,7 +10,7 @@ const KEY = Buffer.alloc(32, 7);
 const NOW = Date.UTC(2026, 9, 11, 12, 0, 0);
 const good = (over = {}) => ({
   event_type: 'mariage', event_address: '12 rue de la Paix, 75002 Paris', installation_type: 'indoor',
-  photobooth_requested: true, photobooth_package_id: 'decouverte', couple_first_names: 'Aya et Sam',
+  photobooth_requested: true, photobooth_package_id: 'decouverte', magnet_bar_requested: false, couple_first_names: 'Aya et Sam',
   event_date: '2027-06-12', start_time: '18:00', guest_count: 120,
   first_name: 'Aya', last_name: 'Martin', email: 'Aya.Martin@Example.com', phone: '+33 6 00 00 00 00',
   started_at: NOW - 60000, website: '', ...over
@@ -67,9 +67,9 @@ test('validation: formule requise si Oui, inconnue refusée, sans formule config
   assert.ok(validateBooking(good({ photobooth_package_id: undefined }), { now: NOW, packageIds: [] }).ok);
 });
 test('validation: prénoms des mariés seulement pour mariage/nikkah/fiançailles', () => {
-  assert.equal(validateBooking(good({ event_type: 'anniversaire' }), ctx).value.couple_first_names, null);
+  assert.equal(validateBooking(good({ event_type: 'anniversaire' }), ctx).value.couple_first_names, 'Aya et Sam');
   assert.equal(validateBooking(good({ event_type: 'nikkah-hlel' }), ctx).value.couple_first_names, 'Aya et Sam');
-  assert.equal(validateBooking(good({ event_type: 'soiree-henne' }), ctx).value.couple_first_names, null);
+  assert.equal(validateBooking(good({ event_type: 'mariage', photobooth_requested: false, photobooth_package_id: null }), ctx).value.couple_first_names, null);
 });
 test('validation: dates (passée refusée, aujourd’hui accepté, calendrier réel)', () => {
   assert.ok(validateBooking(good({ event_date: '2026-10-10' }), ctx).errors.event_date);

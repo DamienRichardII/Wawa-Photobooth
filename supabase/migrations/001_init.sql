@@ -32,6 +32,7 @@ create table if not exists public.booking_requests (
   guest_count integer not null check (guest_count between 1 and 2000),
   installation_type text not null check (installation_type in ('indoor','outdoor')),
   photobooth_requested boolean not null,
+  magnet_bar_requested boolean not null default false, -- ajouté par 002_magnet_bar.sql sur les bases existantes
   package_id text,                      -- volontairement sans FK : l'instantané ci-dessous fait foi
   package_snapshot jsonb,               -- formule telle que connue du serveur au moment de la demande
   pii_encrypted text not null,          -- prénom, nom, email, téléphone, adresse, prénoms des mariés (chiffrés)

@@ -20,6 +20,7 @@ export const STEPS = [
   { id: 'place', side: 'Lieu', label: 'Lieu' },
   { id: 'photobooth', side: 'Photobooth', label: 'Photobooth' },
   { id: 'package', side: 'Formule', label: 'Formule Photobooth' },
+  { id: 'magnets', side: 'Bar à magnets', label: 'Bar à magnets' },
   { id: 'details', side: 'Détails', label: 'Détails' },
   { id: 'contact', side: 'Vous', label: 'Vous' },
   { id: 'recap', side: 'Récapitulatif', label: 'Récapitulatif' }
@@ -28,7 +29,7 @@ export const STEPS = [
 export const FIELD_STEP = {
   event_type: 'event', event_type_other: 'event',
   event_address: 'place', address_place_id: 'place', installation_type: 'place',
-  photobooth_requested: 'photobooth', photobooth_package_id: 'package',
+  photobooth_requested: 'photobooth', photobooth_package_id: 'package', magnet_bar_requested: 'magnets',
   couple_first_names: 'details', event_date: 'details', start_time: 'details', guest_count: 'details',
   first_name: 'contact', last_name: 'contact', email: 'contact', phone: 'contact'
 };

@@ -1,11 +1,5 @@
 import { el, icon } from './dom.js';
 
-const MEDIA = [
-  { slug: 'miroir-fleurs-blanches', alt: 'Photobooth WAWA avec composition de fleurs blanches et crème' },
-  { slug: 'miroir-logo-led', alt: 'Photobooth WAWA avec cadre lumineux LED' },
-  { slug: 'miroir-ecran-fete', alt: 'Photobooth WAWA lors d’une soirée avec écran d’accueil festif' },
-  { slug: 'miroir-fleurs-jaunes', alt: 'Photobooth WAWA décoré de fleurs jaunes et blanches' }
-];
 
 export const euro = (n) => `${Number(n).toLocaleString('fr-FR', { maximumFractionDigits: 2 })}€`;
 export function durationLabel(h) {
@@ -17,13 +11,8 @@ export const FAMILY_LABEL = { numerique: 'Photo numérique', tirages: 'Tirages i
 
 /** Carte de formule : n'affiche QUE les propriétés renseignées (jamais de valeur inventée). */
 export function packageCard(p, { index = 0, included = [], cta = true } = {}) {
-  const m = MEDIA[index % MEDIA.length];
   const feats = [p.print_allowance, durationLabel(p.duration_hours), ...included.slice(0, 1)].filter(Boolean);
   const li = el('li', { class: 'pkg-card card reveal', style: false }, [
-    el('div', { class: 'pkg-card__media' }, [
-      el('img', { src: `/media/img/${m.slug}-poster.webp`, alt: m.alt, width: 576, height: 1024, loading: 'lazy', decoding: 'async' }),
-      p.print_allowance === 'Tirages illimités' ? el('span', { class: 'pkg-card__tag', text: 'Tirages illimités' }) : null
-    ]),
     el('div', { class: 'pkg-card__body' }, [
       el('h3', { text: p.name }),
       p.price_eur !== undefined ? el('p', { class: 'pkg-price', text: euro(p.price_eur) }) : null,

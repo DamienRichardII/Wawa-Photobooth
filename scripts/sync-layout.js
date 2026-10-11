@@ -76,21 +76,14 @@ function footer() {
 }
 
 // ── Formules mises en avant (pré-rendu depuis config/packages.json) ───────────────
-const MEDIA = [
-  ['miroir-fleurs-blanches', 'Photobooth WAWA avec composition de fleurs blanches et crème'],
-  ['miroir-logo-led', 'Photobooth WAWA avec cadre lumineux LED'],
-  ['miroir-ecran-fete', 'Photobooth WAWA lors d’une soirée avec écran d’accueil festif'],
-  ['miroir-fleurs-jaunes', 'Photobooth WAWA décoré de fleurs jaunes et blanches']
-];
 const euro = (n) => `${Number(n).toLocaleString('fr-FR', { maximumFractionDigits: 2 })}€`;
 const dur = (h) => { const w = Math.floor(h); const m = Math.round((h - w) * 60); return `${w}h${m ? String(m).padStart(2, '0') : ''} de présence`; };
 function featuredPackages() {
   const list = packagesCfg.packages.filter((p) => p.is_active && p.is_featured).sort((a, b) => a.sort_order - b.sort_order).slice(0, 4);
   if (!list.length) return '<li class="notice">Formules en cours de configuration.</li>';
   return list.map((p, i) => {
-    const [slug, alt] = MEDIA[i % MEDIA.length];
     const feats = [p.print_allowance, p.duration_hours ? dur(p.duration_hours) : null, (packagesCfg.included || [])[0]].filter(Boolean);
-    return `<li class="pkg-card card reveal d${i + 1}"><div class="pkg-card__media"><img src="/media/img/${slug}-poster.webp" alt="${esc(alt)}" width="576" height="1024" loading="lazy" decoding="async"></div><div class="pkg-card__body"><h3>${esc(p.name)}</h3><p class="pkg-price">${euro(p.price_eur)}</p><ul class="pkg-feats">${feats.map((f) => `<li>${ico('check')}<span>${esc(f)}</span></li>`).join('')}</ul><a class="btn btn--brown" href="/reservation/?formule=${encodeURIComponent(p.id)}">Choisir cette formule</a></div></li>`;
+    return `<li class="pkg-card card reveal d${i + 1}"><div class="pkg-card__body"><h3>${esc(p.name)}</h3><p class="pkg-price">${euro(p.price_eur)}</p><ul class="pkg-feats">${feats.map((f) => `<li>${ico('check')}<span>${esc(f)}</span></li>`).join('')}</ul><a class="btn btn--brown" href="/reservation/?formule=${encodeURIComponent(p.id)}">Choisir cette formule</a></div></li>`;
   }).join('');
 }
 
@@ -113,9 +106,8 @@ function familyPackages(family) {
   const list = packagesCfg.packages.filter((p) => p.is_active && p.family === family).sort((a, b) => a.sort_order - b.sort_order);
   if (!list.length) return '<li class="notice">Formules en cours de configuration.</li>';
   return list.map((p, i) => {
-    const [slug, alt] = MEDIA[i % MEDIA.length];
     const feats = [p.print_allowance, p.duration_hours ? dur(p.duration_hours) : null, (packagesCfg.included || [])[0]].filter(Boolean);
-    return `<li class="pkg-card card reveal d${(i % 4) + 1}"><div class="pkg-card__media"><img src="/media/img/${slug}-poster.webp" alt="${esc(alt)}" width="576" height="1024" loading="lazy" decoding="async"></div><div class="pkg-card__body"><h3>${esc(p.name)}</h3><p class="pkg-price">${euro(p.price_eur)}</p><ul class="pkg-feats">${feats.map((f) => `<li>${ico('check')}<span>${esc(f)}</span></li>`).join('')}</ul><a class="btn btn--brown" href="/reservation/?formule=${encodeURIComponent(p.id)}">Choisir cette formule</a></div></li>`;
+    return `<li class="pkg-card card reveal d${(i % 4) + 1}"><div class="pkg-card__body"><h3>${esc(p.name)}</h3><p class="pkg-price">${euro(p.price_eur)}</p><ul class="pkg-feats">${feats.map((f) => `<li>${ico('check')}<span>${esc(f)}</span></li>`).join('')}</ul><a class="btn btn--brown" href="/reservation/?formule=${encodeURIComponent(p.id)}">Choisir cette formule</a></div></li>`;
   }).join('');
 }
 function optionsBlock() {

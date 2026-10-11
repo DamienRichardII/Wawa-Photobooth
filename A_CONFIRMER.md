@@ -12,7 +12,7 @@
 ## Informations de l'entreprise
 - Raison sociale, forme, SIRET, adresse, directeur de publication, contact RGPD/DPO, hébergeur (Vercel pré-rempli), durée de conservation → pages légales (marquées « à renseigner »).
 - Email destinataire des demandes, email/téléphone/horaires publics, URLs des réseaux sociaux.
-- Texte « Notre histoire » (page À propos). Avis clients : aucun fourni, donc aucun affiché.
+Avis clients : aucun fourni, donc aucun affiché.
 
 ## Assets
 - Logo officiel en SVG/PNG transparent (variantes générées à partir du fichier fourni).

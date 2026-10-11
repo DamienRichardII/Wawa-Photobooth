@@ -26,6 +26,10 @@ await next(); console.log('step4:', await txt('[data-progress-name]'), 'cards:',
 const first = p.locator('[data-packages] input').first();
 if (await first.count()) await first.check({ force: true });
 await next();
+console.log('step magnets:', await txt('[data-progress-text]'), '|', await txt('[data-progress-name]'));
+await next(); console.log('magnets required error:', await txt('[data-summary]'));
+await p.check('input[name=magnet_bar_requested][value=yes]', { force: true }); console.log('info prix:', await txt('[data-magnet-info]'));
+await next();
 await p.fill('#couple_first_names', 'Awa et Moussa');
 await p.fill('#event_date', '2020-01-01'); await p.fill('#start_time', '18:00'); await p.fill('#guest_count', '120');
 await next(); console.log('past date error:', await txt('[data-summary]'));

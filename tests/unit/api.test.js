@@ -21,7 +21,7 @@ test.after(() => { server.close(); fs.rmSync(tmp, { recursive: true, force: true
 
 const body = (over = {}) => ({
   event_type: 'mariage', event_address: '12 rue de la Paix, 75002 Paris', installation_type: 'indoor',
-  photobooth_requested: true, photobooth_package_id: 'decouverte', couple_first_names: 'Aya et Sam',
+  photobooth_requested: true, photobooth_package_id: 'decouverte', magnet_bar_requested: false, couple_first_names: 'Aya et Sam',
   event_date: '2999-06-12'.replace('2999', String(new Date().getFullYear() + 1)), start_time: '18:00', guest_count: 120,
   first_name: 'Aya', last_name: 'Martin', email: 'aya.martin@example.com', phone: '+33600000000',
   started_at: Date.now() - 60000, website: '', idempotency_key: crypto.randomUUID(), ...over

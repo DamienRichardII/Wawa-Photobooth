@@ -10,6 +10,7 @@ await p.check('input[name=event_type][value=anniversaire]', { force: true }); aw
 await p.fill('#event_address', '5 avenue Foch, Lyon'); await p.check('input[name=installation_type][value=outdoor]', { force: true });
 console.log('outdoor warning:', await p.locator('[data-outdoor-warning]').isVisible()); await go();
 await p.check('input[name=photobooth_requested][value=no]', { force: true }); await go();
+await p.check('input[name=magnet_bar_requested][value=no]', { force: true }); await go();
 console.log('couple hidden for anniversaire:', !(await p.locator('[data-field=couple_first_names]').isVisible()));
 await p.fill('#event_date', '2027-06-12'); await p.fill('#start_time', '18:00'); await p.fill('#guest_count', '50'); await go();
 await p.fill('#first_name', 'Test'); await p.fill('#last_name', 'Client'); await p.fill('#email', 'a@b.fr'); await p.fill('#phone', '0600000000'); await go();

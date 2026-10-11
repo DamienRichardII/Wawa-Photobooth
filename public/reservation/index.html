@@ -53,13 +53,13 @@
 
     <aside class="bk-side" aria-label="Progression">
       <img class="bk-side__logo" src="/media/img/logo-embleme-or.webp" width="760" height="635" alt="" loading="lazy">
-      <p class="bk-side__title">Votre demande en <span data-total>7</span> étapes</p>
+      <p class="bk-side__title">Votre demande en <span data-total>8</span> étapes</p>
       <ol class="bk-side__list" data-side-list></ol>
     </aside>
 
     <div class="bk-card" id="bk-card">
       <div class="bk-progress" aria-hidden="false">
-        <p class="bk-progress__text"><span data-progress-text>Étape 1 sur 7</span><span class="bk-progress__name" data-progress-name></span></p>
+        <p class="bk-progress__text"><span data-progress-text>Étape 1 sur 8</span><span class="bk-progress__name" data-progress-name></span></p>
         <div class="bk-progress__track" role="progressbar" aria-label="Progression de la demande" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="bk-progress__bar" data-progress-bar></span></div>
       </div>
 
@@ -121,7 +121,7 @@
           <section class="bk-step" data-step="photobooth" hidden aria-labelledby="h-photobooth">
             <p class="bk-step__label">📸 Photobooth</p>
             <h2 id="h-photobooth" tabindex="-1">Envie d’un Photobooth ?</h2>
-            <p class="bk-step__desc">Photos imprimées sur place, design personnalisé.</p>
+            <p class="bk-step__desc">Photos imprimées ou numérique sur place avec design personnalisé.</p>
             <div class="field" data-field="photobooth_requested">
               <fieldset class="choice-grid choice-grid--2" aria-describedby="err-photobooth_requested">
                 <legend class="visually-hidden">Souhaitez-vous un Photobooth ?</legend>
@@ -143,12 +143,27 @@
             </div>
           </section>
 
-          <!-- ÉTAPE 5 -->
+          <!-- ÉTAPE 5 : BAR À MAGNETS -->
+          <section class="bk-step" data-step="magnets" hidden aria-labelledby="h-magnets">
+            <p class="bk-step__label">🧲 Bar à magnets</p>
+            <h2 id="h-magnets" tabindex="-1">Envie d’un Bar à magnets ?</h2>
+            <div class="field" data-field="magnet_bar_requested">
+              <fieldset class="choice-grid choice-grid--2" aria-describedby="err-magnet_bar_requested">
+                <legend class="visually-hidden">Souhaitez-vous un Bar à magnets ?</legend>
+                <label class="choice"><input type="radio" name="magnet_bar_requested" value="yes"><span class="choice__box"><span class="choice__emoji" aria-hidden="true">🧲</span><span class="choice__text">Oui</span><span class="choice__tick" aria-hidden="true"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-check"/></svg></span></span></label>
+                <label class="choice"><input type="radio" name="magnet_bar_requested" value="no"><span class="choice__box"><span class="choice__emoji" aria-hidden="true">🚫</span><span class="choice__text">Non</span><span class="choice__tick" aria-hidden="true"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-check"/></svg></span></span></label>
+              </fieldset>
+              <p class="error-msg" id="err-magnet_bar_requested" role="alert"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-alert"/></svg><span></span></p>
+            </div>
+            <div class="notice" data-magnet-info role="status" hidden><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-info"/></svg><p data-magnet-info-text></p></div>
+          </section>
+
+          <!-- ÉTAPE 6 -->
           <section class="bk-step" data-step="details" hidden aria-labelledby="h-details">
             <p class="bk-step__label">Détails</p>
             <h2 id="h-details" tabindex="-1">Les détails de votre événement</h2>
             <div class="field" data-field="couple_first_names" data-couple hidden>
-              <label for="couple_first_names">Prénoms des mariés (pour vos designs) <span class="opt">(facultatif)</span></label>
+              <label for="couple_first_names">Inscription pour les tirages <span class="opt">(facultatif)</span></label>
               <input class="input" id="couple_first_names" name="couple_first_names" maxlength="120" autocomplete="off" aria-describedby="err-couple_first_names">
               <p class="error-msg" id="err-couple_first_names" role="alert"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-alert"/></svg><span></span></p>
             </div>
@@ -172,7 +187,7 @@
             </div>
           </section>
 
-          <!-- ÉTAPE 6 -->
+          <!-- ÉTAPE 7 -->
           <section class="bk-step" data-step="contact" hidden aria-labelledby="h-contact">
             <p class="bk-step__label">Vous</p>
             <h2 id="h-contact" tabindex="-1">Comment vous joindre ?</h2>
@@ -188,7 +203,7 @@
             </div>
           </section>
 
-          <!-- ÉTAPE 7 -->
+          <!-- ÉTAPE 8 -->
           <section class="bk-step" data-step="recap" hidden aria-labelledby="h-recap">
             <p class="bk-step__label">Récapitulatif</p>
             <h2 id="h-recap" tabindex="-1">Votre demande</h2>

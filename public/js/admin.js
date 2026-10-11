@@ -94,7 +94,7 @@ async function openRequest(id) {
   let d; try { d = await api('request', { query: { id } }); } catch (e) { box.replaceChildren(empty(errMsg(e))); return; }
   const r = d.request; const p = r.package_snapshot;
   const rows = [['Référence', r.reference], ['Reçue', dt(r.created_at)], ['Occasion', r.event_type + (r.event_type_other ? ` (${r.event_type_other})` : '')], ['Adresse', r.event_address], ['Installation', r.installation_type === 'outdoor' ? 'Extérieur (règles de sécurité à vérifier)' : 'Intérieur'],
-    ['Photobooth', r.photobooth_requested ? 'Oui' : 'Non'], ['Formule (au moment de la demande)', p ? `${p.name}${p.price_eur != null ? ' · ' + p.price_eur + '€' : ''}` : '—'], ['Prénoms', r.couple_first_names], ['Date / heure', `${r.event_date} ${r.start_time}`], ['Invités', r.guest_count],
+    ['Photobooth', r.photobooth_requested ? 'Oui' : 'Non'], ['Bar à magnets', r.magnet_bar_requested ? 'Oui' : 'Non'], ['Formule (au moment de la demande)', p ? `${p.name}${p.price_eur != null ? ' · ' + p.price_eur + '€' : ''}` : '—'], ['Inscription pour les tirages', r.couple_first_names], ['Date / heure', `${r.event_date} ${r.start_time}`], ['Invités', r.guest_count],
     ['Nom', r.name], ['Email', r.email], ['Téléphone', r.phone], ['Consentement marketing', r.marketing_consent ? 'Oui' : 'Non'], ['Notification équipe', r.notify_status], ['Accusé client', r.ack_status]].filter(([, v]) => v !== null && v !== undefined && v !== '');
   const sel = el('select', {}, Object.entries(STATUS_LABEL).map(([v, t]) => option(v, t, v === r.status)));
   const save = el('button', { class: 'btn btn--gold btn--sm', type: 'button', onclick: async () => {
