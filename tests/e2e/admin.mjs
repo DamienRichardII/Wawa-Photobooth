@@ -12,7 +12,7 @@ const mk = (i, over = {}) => ({ event_type: 'mariage', event_address: '1 rue Tes
 for (let i = 0; i < 2; i++) { const r = await ctx.request.post(base + '/api/booking-requests', { headers: { origin: base, 'x-forwarded-for': `10.1.0.${i + 10}` }, data: mk(i) }); ok(r.status() === 201, 'demande créée ' + r.status()); }
 
 await p.goto(base + '/admin/');
-await p.fill('[name=email]', 'admin@test.local'); await p.fill('[name=password]', 'mauvais'); await p.click('#login-form button[type=submit]');
+await p.fill('[name=email]', 'admin@test.local'); await p.fill('[name=password]', 'mauvais'); await p.click('[data-pw-toggle]'); if (await p.getAttribute('[name=password]', 'type') !== 'text') { console.log('FAIL oeil'); process.exitCode = 1; } await p.click('#login-form button[type=submit]');
 await p.waitForSelector('[data-login-error]:not([hidden])'); ok(true, 'mauvais identifiants refusés : ' + await p.innerText('[data-login-error]'));
 await p.fill('[name=password]', 'MotDePasseTest-2026!'); await p.click('#login-form button[type=submit]');
 await p.waitForSelector('[data-view=app]:not([hidden])'); await p.waitForSelector('.kpi, [class*=kpi]');
@@ -43,7 +43,7 @@ await p.goto(base + '/admin/#/calendar'); await p.waitForTimeout(400); ok((await
 await p.goto(base + '/admin/#/packages'); await p.waitForSelector('text=Importer la grille en base'); await p.click('text=Importer la grille en base');
 await p.waitForFunction(() => document.querySelectorAll('tbody tr').length >= 16, null, { timeout: 8000 }).catch(() => {}); ok(await p.locator('tbody tr').count() >= 16, 'formules importées en base');
 // Santé + Journal
-await p.goto(base + '/admin/#/health'); await p.waitForTimeout(400); ok((await p.innerText('main')).includes('Chiffrement'), 'configuration');
+await p.goto(base + '/admin/#/health'); await p.waitForSelector('main >> text=Chiffrement'); ok(true, 'configuration');
 await p.goto(base + '/admin/#/audit'); await p.waitForSelector('tbody tr'); ok(await p.locator('tbody tr').count() > 3, 'journal d’audit');
 // CSV
 await p.goto(base + '/admin/#/requests'); await p.click('button:text-is("Liste")'); await p.waitForSelector('tbody tr');

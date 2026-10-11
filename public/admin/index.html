@@ -23,21 +23,10 @@
     <p class="notice-box notice-box--warn" data-config-warning hidden></p>
     <p class="notice-box" data-session-msg hidden></p>
     <label>Email<input type="email" name="email" autocomplete="username" required></label>
-    <label>Mot de passe<input type="password" name="password" autocomplete="current-password" required></label>
-    <label>Code à 6 chiffres <span class="muted">(application d’authentification)</span><input type="text" name="code" inputmode="numeric" autocomplete="one-time-code" maxlength="8" pattern="[0-9 ]*"></label>
+    <label>Mot de passe<span class="pw"><input type="password" name="password" autocomplete="current-password" required><button type="button" class="pw__toggle" data-pw-toggle aria-label="Afficher le mot de passe" aria-pressed="false"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/><path class="pw__slash" d="M3 3l18 18"/></svg></button></span></label>
     <p class="error-text" role="alert" data-login-error hidden></p>
     <button class="abtn abtn--gold abtn--lg" type="submit">Se connecter</button>
-    <p class="login__foot muted">Connexion protégée : double authentification, session limitée à 2 h, journal des accès.</p>
-  </form>
-  <form class="login__card" id="enroll-form" autocomplete="off" novalidate hidden>
-    <h1>Activer la double authentification</h1>
-    <p class="muted">Première connexion : scannez ce QR code avec une application d’authentification (Google Authenticator, Authy, 1Password…), puis saisissez le code à 6 chiffres affiché.</p>
-    <img data-enroll-qr class="login__qr" width="200" height="200" alt="QR code à scanner" hidden>
-    <p class="muted">Ou saisissez cette clé manuellement : <code data-enroll-secret></code></p>
-    <label>Code à 6 chiffres<input type="text" name="code" inputmode="numeric" autocomplete="one-time-code" maxlength="8" pattern="[0-9 ]*" required></label>
-    <p class="error-text" role="alert" data-enroll-error hidden></p>
-    <button class="abtn abtn--gold abtn--lg" type="submit">Activer et se connecter</button>
-    <button class="abtn" type="button" data-enroll-cancel>Annuler</button>
+    <p class="login__foot muted">Connexion protégée : session limitée à 2 h, verrouillage après échecs, journal des accès.</p>
   </form>
 </section>
 

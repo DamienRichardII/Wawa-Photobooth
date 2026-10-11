@@ -232,63 +232,30 @@ test('en-têtes de sécurité (CSP) sur pages et API', async () => {
   assert.equal(r.headers.get('x-content-type-options'), 'nosniff');
 });
 
-test('administration via Supabase Auth : liste blanche, MFA obligatoire, enrôlement', async () => {
+test('administration via Supabase Auth : identifiant + mot de passe, liste blanche', async () => {
   const realFetch = global.fetch;
-  const users = {
-    'ok@example.com': { id: '11111111-1111-4111-8111-111111111111', pw: 'pw-ok', factors: [{ id: '22222222-2222-4222-8222-222222222222', factor_type: 'totp', status: 'verified' }] },
-    'new@example.com': { id: '33333333-3333-4333-8333-333333333333', pw: 'pw-new', factors: [] },
-    'intrus@example.com': { id: '44444444-4444-4444-8444-444444444444', pw: 'pw-x', factors: [{ id: '55555555-5555-4555-8555-555555555555', factor_type: 'totp', status: 'verified' }] }
-  };
-  const enrolled = new Set();
+  const users = { 'ok@example.com': 'pw-ok', 'intrus@example.com': 'pw-x' };
   global.fetch = async (url, init = {}) => {
     const u = String(url);
     if (!u.startsWith('https://proj.supabase.co/auth/v1/')) return realFetch(url, init);
-    const j = (status, data) => ({ ok: status < 300, status, json: async () => data });
     const b = init.body ? JSON.parse(init.body) : {};
-    if (u.includes('/token?grant_type=password')) {
-      const us = users[b.email];
-      if (!us || us.pw !== b.password) return j(400, { error: 'invalid_grant' });
-      const factors = us.factors.concat(enrolled.has(b.email) ? [{ id: 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa', factor_type: 'totp', status: 'verified' }] : []);
-      return j(200, { access_token: 'tok-' + b.email, user: { id: us.id, email: b.email, email_confirmed_at: '2026-01-01', factors } });
-    }
-    if (u.endsWith('/factors')) return j(200, { id: 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa', totp: { secret: 'JBSWY3DPEHPK3PXP', uri: 'otpauth://totp/x', qr_code: 'data:image/svg+xml;utf-8,<svg/>' } });
-    if (u.endsWith('/challenge')) return j(200, { id: 'ch-1' });
-    if (u.endsWith('/verify')) { if (b.code === '123456') { if (init.headers.Authorization === 'Bearer tok-new@example.com') enrolled.add('new@example.com'); return j(200, {}); } return j(400, {}); }
-    return j(404, {});
+    if (u.includes('/token?grant_type=password') && users[b.email] === b.password) return { ok: true, status: 200, json: async () => ({ access_token: 't', user: { id: 'u', email: b.email, email_confirmed_at: '2026-01-01', factors: [] } }) };
+    return { ok: false, status: 400, json: async () => ({ error: 'invalid_grant' }) };
   };
   try {
     setEnv({ STORAGE_DRIVER: 'file', DEV_STORE_FILE: STORE_FILE, MIN_FILL_MS: '50', SESSION_SECRET: 'x'.repeat(48), SUPABASE_URL: 'https://proj.supabase.co', SUPABASE_PUBLISHABLE_KEY: 'sb_publishable_' + 'k'.repeat(30) });
-    fs.writeFileSync(STORE_FILE, JSON.stringify({ admin_users: [{ email: 'ok@example.com', role: 'admin' }, { email: 'new@example.com', role: 'admin' }] }));
+    fs.writeFileSync(STORE_FILE, JSON.stringify({ admin_users: [{ email: 'ok@example.com', role: 'admin' }] }));
     resetBackend();
     const sc = await (await fetch(base + '/api/admin/status-check')).json();
     assert.equal(sc.configured, true); assert.equal(sc.mode, 'supabase');
-    // mauvais mot de passe, non autorisé : même réponse générique
     for (const [email, password] of [['ok@example.com', 'faux'], ['intrus@example.com', 'pw-x'], ['inconnu@example.com', 'x']]) {
-      const r = await post('/api/admin/login', { email, password, code: '123456' });
+      const r = await post('/api/admin/login', { email, password });
       assert.equal(r.status, 401); assert.equal((await r.json()).error, 'invalid_credentials');
     }
-    // code manquant / faux
-    assert.equal((await post('/api/admin/login', { email: 'ok@example.com', password: 'pw-ok', code: '' })).status, 401);
-    assert.equal((await post('/api/admin/login', { email: 'ok@example.com', password: 'pw-ok', code: '000000' })).status, 401);
-    // succès
-    let r = await post('/api/admin/login', { email: 'ok@example.com', password: 'pw-ok', code: '123456' });
+    const r = await post('/api/admin/login', { email: 'OK@example.com', password: 'pw-ok' });
     assert.equal(r.status, 200);
-    const d = await r.json(); assert.equal(d.email, 'ok@example.com');
     const cookie = r.headers.get('set-cookie').split(';')[0];
     assert.equal((await fetch(base + '/api/admin/me', { headers: { cookie } })).status, 200);
-    // sans MFA : enrôlement requis, jamais de session
-    r = await post('/api/admin/login', { email: 'new@example.com', password: 'pw-new', code: '' });
-    assert.equal(r.status, 403); assert.equal((await r.json()).error, 'mfa_enrollment_required'); assert.ok(!r.headers.get('set-cookie'));
-    // enrôlement refusé pour un compte déjà protégé ou non autorisé
-    assert.equal((await post('/api/admin/mfa-enroll', { email: 'ok@example.com', password: 'pw-ok' })).status, 409);
-    assert.equal((await post('/api/admin/mfa-enroll', { email: 'intrus@example.com', password: 'pw-x' })).status, 401);
-    r = await post('/api/admin/mfa-enroll', { email: 'new@example.com', password: 'pw-new' });
-    assert.equal(r.status, 200);
-    const f = await r.json(); assert.ok(f.secret && f.factor_id);
-    assert.equal((await post('/api/admin/mfa-verify', { email: 'new@example.com', password: 'pw-new', factor_id: f.factor_id, code: '000000' })).status, 401);
-    r = await post('/api/admin/mfa-verify', { email: 'new@example.com', password: 'pw-new', factor_id: f.factor_id, code: '123456' });
-    assert.equal(r.status, 200); assert.ok(r.headers.get('set-cookie'));
-    // un compte retiré de la liste blanche perd l'accès
     fs.writeFileSync(STORE_FILE, JSON.stringify({ admin_users: [] }));
     assert.equal((await fetch(base + '/api/admin/me', { headers: { cookie } })).status, 401);
   } finally { global.fetch = realFetch; }

@@ -228,3 +228,9 @@ dialog.confirm.wide { max-width: 720px; }
 /* Enrôlement MFA */
 .login__qr { display: block; margin: .5rem auto; background: #fff; padding: 8px; border-radius: 8px; width: 200px; height: 200px; }
 #enroll-form code { word-break: break-all; user-select: all; }
+
+/* Champ mot de passe + œil */
+.pw { position: relative; display: block; } .pw input { width: 100%; padding-right: 46px; box-sizing: border-box; }
+.pw__toggle { position: absolute; right: 4px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; display: grid; place-items: center; background: none; border: 0; color: inherit; cursor: pointer; border-radius: 8px; }
+.pw__toggle:focus-visible { outline: 2px solid var(--gold, #c9a14a); } .pw__toggle .icon { width: 20px; height: 20px; }
+.pw__slash { display: none; } .pw__toggle[aria-pressed=true] .pw__slash { display: inline; }
