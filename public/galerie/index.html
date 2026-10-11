@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Galerie — WAWA PHOTOBOOTH</title>
+<meta name="description" content="Photos et vidéos du photobooth WAWA PHOTOBOOTH en situation lors d’événements.">
+<meta name="theme-color" content="#14100c">
+<meta property="og:title" content="Galerie — WAWA PHOTOBOOTH">
+<meta property="og:description" content="Photos et vidéos du photobooth WAWA PHOTOBOOTH en situation lors d’événements.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<link rel="icon" type="image/png" sizes="32x32" href="/media/icons/favicon-32.png">
+<link rel="apple-touch-icon" href="/media/icons/apple-touch-icon.png">
+<link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/playfair-display-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/css/pages.css">
+<script src="/js/boot.js"></script>
+<script type="module" src="/js/main.js"></script>
+<script type="module" src="/js/gallery.js"></script>
+</head>
+<body data-nav="galerie">
+<!--@header-->
+<a class="skip-link" href="#main">Aller au contenu principal</a>
+<header class="site-header" data-header>
+  <div class="container header-inner">
+    <a class="brand" href="/" aria-label="WAWA PHOTOBOOTH — accueil"><img src="/media/img/logo-embleme-clair.webp" width="760" height="635" alt="WAWA PHOTOBOOTH"></a>
+    <nav id="primary-nav" class="nav" aria-label="Navigation principale">
+      <ul><li><a href="/">Accueil</a></li><li><a href="/prestations/">Nos formules</a></li><li><a href="/galerie/" aria-current="page">Galerie</a></li><li><a href="/reservation/">Réservation</a></li><li><a href="/a-propos/">À propos</a></li><li><a href="/contact/">Contact</a></li></ul>
+      <div class="nav-cta"><a class="btn btn--gold" href="/reservation/">Réserver maintenant</a></div>
+    </nav>
+    <div class="header-actions">
+      
+      <a class="btn btn--outline btn--sm" href="/reservation/">Réserver</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Ouvrir le menu"><svg class="icon i-open" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-menu"/></svg><svg class="icon i-close" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-x"/></svg></button>
+    </div>
+  </div>
+</header>
+<!--@/header-->
+<main id="main">
+<section class="page-hero">
+  <div class="container">
+    <nav class="breadcrumb" aria-label="Fil d’Ariane"><a href="/">Accueil</a> / <span aria-current="page">Galerie</span></nav>
+    <h1>Galerie</h1>
+    <p class="lead mb-0">Le photobooth WAWA en situation : cadre lumineux, décors floraux, écrans personnalisés.</p>
+  </div>
+</section>
+
+<section class="section" aria-label="Photos et vidéos">
+  <div class="container">
+    <div class="filters" role="group" aria-label="Filtrer la galerie">
+      <button class="chip" type="button" data-filter="all" aria-pressed="true">Tout</button>
+      <button class="chip" type="button" data-filter="video" aria-pressed="false">Vidéos</button>
+      <button class="chip" type="button" data-filter="photo" aria-pressed="false">Photos</button>
+    </div>
+    <ul class="gallery" data-gallery>
+        <li class="reveal d1" data-kind="video"><button class="tile" type="button" data-src="/media/video/miroir-fleurs-blanches.mp4" data-kind="video" data-poster="/media/img/miroir-fleurs-blanches-poster.webp" data-caption="Vidéo : photobooth WAWA avec composition de fleurs blanches et crème" aria-label="Ouvrir : Vidéo : photobooth WAWA avec composition de fleurs blanches et crème"><img src="/media/img/miroir-fleurs-blanches-poster.webp" alt="Vidéo : photobooth WAWA avec composition de fleurs blanches et crème" width="576" height="1024" loading="lazy" decoding="async"><span class="play"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-play"/></svg></span><span class="tile__badge"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-film"/></svg> Vidéo</span></button></li>
+        <li class="reveal d2" data-kind="photo"><button class="tile" type="button" data-src="/media/img/photo-fleurs-blanches-led.webp" data-kind="photo" data-poster="/media/img/photo-fleurs-blanches-led.webp" data-caption="Photo : photobooth WAWA, cadre lumineux et fleurs blanches" aria-label="Ouvrir : Photo : photobooth WAWA, cadre lumineux et fleurs blanches"><img src="/media/img/photo-fleurs-blanches-led.webp" alt="Photo : photobooth WAWA, cadre lumineux et fleurs blanches" width="576" height="1024" loading="lazy" decoding="async"><span class="tile__badge"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-image"/></svg> Photo</span></button></li>
+        <li class="reveal d3" data-kind="video"><button class="tile" type="button" data-src="/media/video/miroir-logo-led.mp4" data-kind="video" data-poster="/media/img/miroir-logo-led-poster.webp" data-caption="Vidéo : gros plan sur le photobooth WAWA et son cadre lumineux LED" aria-label="Ouvrir : Vidéo : gros plan sur le photobooth WAWA et son cadre lumineux LED"><img src="/media/img/miroir-logo-led-poster.webp" alt="Vidéo : gros plan sur le photobooth WAWA et son cadre lumineux LED" width="576" height="1024" loading="lazy" decoding="async"><span class="play"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-play"/></svg></span><span class="tile__badge"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-film"/></svg> Vidéo</span></button></li>
+        <li class="reveal d4" data-kind="photo"><button class="tile" type="button" data-src="/media/img/photo-gros-plan-logo.webp" data-kind="photo" data-poster="/media/img/photo-gros-plan-logo.webp" data-caption="Photo : gros plan sur le logo WAWA affiché sur le photobooth" aria-label="Ouvrir : Photo : gros plan sur le logo WAWA affiché sur le photobooth"><img src="/media/img/photo-gros-plan-logo.webp" alt="Photo : gros plan sur le logo WAWA affiché sur le photobooth" width="576" height="1024" loading="lazy" decoding="async"><span class="tile__badge"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-image"/></svg> Photo</span></button></li>
+        <li class="reveal d1" data-kind="video"><button class="tile" type="button" data-src="/media/video/miroir-ecran-fete.mp4" data-kind="video" data-poster="/media/img/miroir-ecran-fete-poster.webp" data-caption="Vidéo : photobooth WAWA en soirée avec écran d’accueil festif" aria-label="Ouvrir : Vidéo : photobooth WAWA en soirée avec écran d’accueil festif"><img src="/media/img/miroir-ecran-fete-poster.webp" alt="Vidéo : photobooth WAWA en soirée avec écran d’accueil festif" width="576" height="1024" loading="lazy" decoding="async"><span class="play"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-play"/></svg></span><span class="tile__badge"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-film"/></svg> Vidéo</span></button></li>
+        <li class="reveal d2" data-kind="photo"><button class="tile" type="button" data-src="/media/img/photo-soiree-ballons.webp" data-kind="photo" data-poster="/media/img/photo-soiree-ballons.webp" data-caption="Photo : photobooth WAWA en soirée, fleurs jaunes et blanches" aria-label="Ouvrir : Photo : photobooth WAWA en soirée, fleurs jaunes et blanches"><img src="/media/img/photo-soiree-ballons.webp" alt="Photo : photobooth WAWA en soirée, fleurs jaunes et blanches" width="576" height="1024" loading="lazy" decoding="async"><span class="tile__badge"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-image"/></svg> Photo</span></button></li>
+        <li class="reveal d3" data-kind="video"><button class="tile" type="button" data-src="/media/video/miroir-fleurs-jaunes.mp4" data-kind="video" data-poster="/media/img/miroir-fleurs-jaunes-poster.webp" data-caption="Vidéo : photobooth WAWA avec écran de sélection et fleurs jaunes" aria-label="Ouvrir : Vidéo : photobooth WAWA avec écran de sélection et fleurs jaunes"><img src="/media/img/miroir-fleurs-jaunes-poster.webp" alt="Vidéo : photobooth WAWA avec écran de sélection et fleurs jaunes" width="576" height="1024" loading="lazy" decoding="async"><span class="play"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-play"/></svg></span><span class="tile__badge"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-film"/></svg> Vidéo</span></button></li>
+        <li class="reveal d4" data-kind="photo"><button class="tile" type="button" data-src="/media/img/photo-ecran-bleu-fleurs.webp" data-kind="photo" data-poster="/media/img/photo-ecran-bleu-fleurs.webp" data-caption="Photo : écran de sélection du photobooth WAWA et fleurs jaunes" aria-label="Ouvrir : Photo : écran de sélection du photobooth WAWA et fleurs jaunes"><img src="/media/img/photo-ecran-bleu-fleurs.webp" alt="Photo : écran de sélection du photobooth WAWA et fleurs jaunes" width="576" height="1024" loading="lazy" decoding="async"><span class="tile__badge"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-image"/></svg> Photo</span></button></li>
+    </ul>
+    <p class="center mt-lg"><a class="btn btn--gold btn--lg" href="/reservation/">Réserver maintenant<svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-arrow-right"/></svg></a></p>
+  </div>
+</section>
+<div class="lightbox" data-lightbox role="dialog" aria-modal="true" aria-label="Aperçu" hidden>
+  <button class="lightbox__btn lightbox__close" type="button" data-lb-close aria-label="Fermer"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-x"/></svg></button>
+  <button class="lightbox__btn lightbox__prev" type="button" data-lb-prev aria-label="Précédent"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-chevron-left"/></svg></button>
+  <button class="lightbox__btn lightbox__next" type="button" data-lb-next aria-label="Suivant"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-chevron-right"/></svg></button>
+  <div class="lightbox__stage"><div data-lb-media></div><p class="lightbox__cap" data-lb-cap></p></div>
+</div>
+</main>
+<!--@footer-->
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <img src="/media/img/logo-complet-or.webp" width="900" height="894" alt="WAWA PHOTOBOOTH — Capturez l’instant, gardez l’émotion." loading="lazy">
+      
+    </div>
+    <div><h2>Navigation</h2><ul><li><a href="/">Accueil</a></li><li><a href="/prestations/">Nos formules</a></li><li><a href="/galerie/">Galerie</a></li><li><a href="/reservation/">Réservation</a></li><li><a href="/a-propos/">À propos</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h2>Informations</h2><ul><li><a href="/faq/">Questions fréquentes</a></li><li><a href="/mentions-legales/">Mentions légales</a></li><li><a href="/politique-de-confidentialite/">Politique de confidentialité</a></li><li><a href="/cookies/">Gestion des cookies</a></li></ul></div>
+    <div><h2>Contact</h2><ul><li><a href="/contact/">Nous écrire</a></li><li><a href="/reservation/">Faire une demande de réservation</a></li></ul></div>
+  </div>
+  <div class="container footer-bottom"><span>© 2026 WAWA PHOTOBOOTH. Tous droits réservés.</span><span>Capturez l’instant, gardez l’émotion.</span></div>
+</footer>
+<!--@/footer-->
+</body>
+</html>

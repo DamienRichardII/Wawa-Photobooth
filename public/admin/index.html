@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Administration — WAWA PHOTOBOOTH</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/media/icons/favicon-32.png" type="image/png">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/css/admin.css">
+<script src="/js/boot.js"></script>
+</head>
+<body class="admin">
+<main id="app" class="adm">
+  <section data-view="login" hidden>
+    <form class="adm-login" id="login-form" autocomplete="on" novalidate>
+      <h1>Administration</h1>
+      <p class="muted">Accès réservé aux personnes habilitées.</p>
+      <div class="adm-notice" data-config-warning hidden></div>
+      <label>Email<input type="email" name="email" autocomplete="username" required></label>
+      <label>Mot de passe<input type="password" name="password" autocomplete="current-password" required></label>
+      <label>Code à 6 chiffres (application d’authentification)<input type="text" name="code" inputmode="numeric" autocomplete="one-time-code" maxlength="8"></label>
+      <p class="adm-error" role="alert" data-login-error hidden></p>
+      <button class="btn btn--gold" type="submit">Se connecter</button>
+    </form>
+  </section>
+  <section data-view="dash" hidden>
+    <header class="adm-top">
+      <strong>WAWA PHOTOBOOTH · Admin</strong>
+      <nav aria-label="Sections" class="adm-tabs" data-tabs></nav>
+      <span class="muted" data-who></span>
+      <button class="btn btn--outline btn--sm" type="button" data-logout>Se déconnecter</button>
+    </header>
+    <div class="adm-notice" data-flash role="status" hidden></div>
+    <div data-panel></div>
+  </section>
+</main>
+<script type="module" src="/js/admin.js"></script>
+</body>
+</html>

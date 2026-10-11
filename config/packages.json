@@ -1,0 +1,36 @@
+{
+  "_meta": {
+    "source": "Transcrit depuis assets/Formules/WhatsApp Image 2026-10-11 at 15.03.00 (1).jpeg (grille « Nos Formules »). À VALIDER par Wawa Photobooth avant mise en ligne : noms, durées, prix. Le nom « Émotion » est écrit « Emotion » sur le visuel et « Émotion » sur la maquette.",
+    "validated_by_client": false
+  },
+  "packages": [
+    { "id": "decouverte",   "name": "Formule Découverte",   "family": "numerique", "print_allowance": "Photo numérique", "duration_hours": 3,  "price_eur": 150, "is_featured": true,  "is_active": true, "sort_order": 10 },
+    { "id": "evasion",      "name": "Formule Évasion",      "family": "numerique", "print_allowance": "Photo numérique", "duration_hours": 4,  "price_eur": 200, "is_featured": true,  "is_active": true, "sort_order": 20 },
+    { "id": "passion",      "name": "Formule Passion",      "family": "numerique", "print_allowance": "Photo numérique", "duration_hours": 5,  "price_eur": 250, "is_featured": true,  "is_active": true, "sort_order": 30 },
+    { "id": "emotion",      "name": "Formule Émotion",      "family": "numerique", "print_allowance": "Photo numérique", "duration_hours": 6,  "price_eur": 300, "is_featured": true,  "is_active": true, "sort_order": 40 },
+    { "id": "prestige",     "name": "Formule Prestige",     "family": "numerique", "print_allowance": "Photo numérique", "duration_hours": 7,  "price_eur": 350, "is_featured": false, "is_active": true, "sort_order": 50 },
+    { "id": "excellence",   "name": "Formule Excellence",   "family": "numerique", "print_allowance": "Photo numérique", "duration_hours": 8,  "price_eur": 400, "is_featured": false, "is_active": true, "sort_order": 60 },
+    { "id": "grandiose",    "name": "Formule Grandiose",    "family": "numerique", "print_allowance": "Photo numérique", "duration_hours": 9,  "price_eur": 450, "is_featured": false, "is_active": true, "sort_order": 70 },
+    { "id": "legende",      "name": "Formule Légende",      "family": "numerique", "print_allowance": "Photo numérique", "duration_hours": 10, "price_eur": 500, "is_featured": false, "is_active": true, "sort_order": 80 },
+
+    { "id": "essentielle",  "name": "Formule Essentielle",  "family": "tirages",   "print_allowance": "Tirages illimités", "duration_hours": 3,  "price_eur": 250, "is_featured": false, "is_active": true, "sort_order": 110 },
+    { "id": "prestiges",    "name": "Formule Prestiges",    "family": "tirages",   "print_allowance": "Tirages illimités", "duration_hours": 4,  "price_eur": 300, "is_featured": false, "is_active": true, "sort_order": 120 },
+    { "id": "signature",    "name": "Formule Signature",    "family": "tirages",   "print_allowance": "Tirages illimités", "duration_hours": 5,  "price_eur": 350, "is_featured": false, "is_active": true, "sort_order": 130 },
+    { "id": "royale",       "name": "Formule Royale",       "family": "tirages",   "print_allowance": "Tirages illimités", "duration_hours": 6,  "price_eur": 400, "is_featured": false, "is_active": true, "sort_order": 140 },
+    { "id": "imperiale",    "name": "Formule Impériale",    "family": "tirages",   "print_allowance": "Tirages illimités", "duration_hours": 7,  "price_eur": 450, "is_featured": false, "is_active": true, "sort_order": 150 },
+    { "id": "elegance",     "name": "Formule Élégance",     "family": "tirages",   "print_allowance": "Tirages illimités", "duration_hours": 8,  "price_eur": 500, "is_featured": false, "is_active": true, "sort_order": 160 },
+    { "id": "majestueuse",  "name": "Formule Majestueuse",  "family": "tirages",   "print_allowance": "Tirages illimités", "duration_hours": 9,  "price_eur": 550, "is_featured": false, "is_active": true, "sort_order": 170 },
+    { "id": "supreme",      "name": "Formule Suprême",      "family": "tirages",   "print_allowance": "Tirages illimités", "duration_hours": 10, "price_eur": 600, "is_featured": false, "is_active": true, "sort_order": 180 }
+  ],
+  "options": [
+    {
+      "id": "bar-a-magnets",
+      "name": "Bar à magnets",
+      "tag": "En option",
+      "price_from_eur": 250,
+      "features": ["Magnets personnalisés", "Souvenirs durables", "Parfaits pour vos invités"],
+      "source": "assets/Formules/WhatsApp Image 2026-10-11 at 15.03.00.jpeg"
+    }
+  ],
+  "included": ["Accessoires inclus", "Option cadre personnalisé (logo / date / message)"]
+}

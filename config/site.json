@@ -1,0 +1,38 @@
+{
+  "_meta": "Informations publiques du site. Toute valeur null = NON FOURNIE par Wawa Photobooth : le site affiche alors « à renseigner » ou masque l'élément. Ne rien inventer ici.",
+  "brand": "WAWA PHOTOBOOTH",
+  "tagline": "Capturez l'instant, gardez l'émotion.",
+  "siteUrl": null,
+  "contact": {
+    "email": null,
+    "phone": null,
+    "whatsapp": null,
+    "hours": null,
+    "serviceArea": null
+  },
+  "social": {
+    "instagram": null,
+    "tiktok": null,
+    "snapchat": null
+  },
+  "legal": {
+    "companyName": null,
+    "legalForm": null,
+    "siret": null,
+    "address": null,
+    "publicationDirector": null,
+    "host": "Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis (à confirmer selon l'hébergement retenu)",
+    "dpoOrContact": null,
+    "retentionMonths": null,
+    "validated": false
+  },
+  "booking": {
+    "marketingConsentEnabled": false,
+    "henneAskCoupleNames": false,
+    "minLeadDays": 0,
+    "addressAutocomplete": {
+      "provider": "geoplateforme",
+      "url": "https://data.geopf.fr/geocodage/search/"
+    }
+  }
+}

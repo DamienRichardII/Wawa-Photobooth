@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact — WAWA PHOTOBOOTH</title>
+<meta name="description" content="Contactez WAWA PHOTOBOOTH pour toute question sur nos formules ou votre événement.">
+<meta name="theme-color" content="#14100c">
+<meta property="og:title" content="Contact — WAWA PHOTOBOOTH">
+<meta property="og:description" content="Contactez WAWA PHOTOBOOTH pour toute question sur nos formules ou votre événement.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<link rel="icon" type="image/png" sizes="32x32" href="/media/icons/favicon-32.png">
+<link rel="apple-touch-icon" href="/media/icons/apple-touch-icon.png">
+<link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/playfair-display-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/css/pages.css">
+<script src="/js/boot.js"></script>
+<script type="module" src="/js/main.js"></script>
+<script type="module" src="/js/contact.js"></script>
+</head>
+<body data-nav="contact">
+<!--@header-->
+<a class="skip-link" href="#main">Aller au contenu principal</a>
+<header class="site-header" data-header>
+  <div class="container header-inner">
+    <a class="brand" href="/" aria-label="WAWA PHOTOBOOTH — accueil"><img src="/media/img/logo-embleme-clair.webp" width="760" height="635" alt="WAWA PHOTOBOOTH"></a>
+    <nav id="primary-nav" class="nav" aria-label="Navigation principale">
+      <ul><li><a href="/">Accueil</a></li><li><a href="/prestations/">Nos formules</a></li><li><a href="/galerie/">Galerie</a></li><li><a href="/reservation/">Réservation</a></li><li><a href="/a-propos/">À propos</a></li><li><a href="/contact/" aria-current="page">Contact</a></li></ul>
+      <div class="nav-cta"><a class="btn btn--gold" href="/reservation/">Réserver maintenant</a></div>
+    </nav>
+    <div class="header-actions">
+      
+      <a class="btn btn--outline btn--sm" href="/reservation/">Réserver</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Ouvrir le menu"><svg class="icon i-open" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-menu"/></svg><svg class="icon i-close" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-x"/></svg></button>
+    </div>
+  </div>
+</header>
+<!--@/header-->
+<main id="main">
+<section class="page-hero">
+  <div class="container">
+    <nav class="breadcrumb" aria-label="Fil d’Ariane"><a href="/">Accueil</a> / <span aria-current="page">Contact</span></nav>
+    <h1>Contact</h1>
+    <p class="lead mb-0">Une question avant de faire votre demande ? Écrivez-nous.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container contact-grid">
+    <form class="form-card reveal" id="contact-form" novalidate aria-labelledby="cf-title">
+      <h2 id="cf-title" class="visually-hidden">Formulaire de contact</h2>
+      <div class="field"><label for="cf-name">Nom</label><input class="input" id="cf-name" name="name" autocomplete="name" required maxlength="120" aria-describedby="cf-name-err"><p class="error-msg" id="cf-name-err" role="alert"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-alert"/></svg><span></span></p></div>
+      <div class="form-row">
+        <div class="field"><label for="cf-email">Email</label><input class="input" id="cf-email" name="email" type="email" autocomplete="email" required maxlength="254" inputmode="email" aria-describedby="cf-email-err"><p class="error-msg" id="cf-email-err" role="alert"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-alert"/></svg><span></span></p></div>
+        <div class="field"><label for="cf-phone">Téléphone <span class="opt">(facultatif)</span></label><input class="input" id="cf-phone" name="phone" type="tel" autocomplete="tel" maxlength="25" inputmode="tel" aria-describedby="cf-phone-err"><p class="error-msg" id="cf-phone-err" role="alert"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-alert"/></svg><span></span></p></div>
+      </div>
+      <div class="field"><label for="cf-message">Message</label><textarea class="input" id="cf-message" name="message" required minlength="10" maxlength="2000" aria-describedby="cf-message-err"></textarea><p class="error-msg" id="cf-message-err" role="alert"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-alert"/></svg><span></span></p></div>
+      <div class="hp" aria-hidden="true"><label>Ne pas remplir <input name="website" tabindex="-1" autocomplete="off"></label></div>
+      <p class="hint mb-16">Vos données servent uniquement à répondre à votre message. <a href="/politique-de-confidentialite/">Politique de confidentialité</a>.</p>
+      <button class="btn btn--gold btn--lg" type="submit">Envoyer le message</button>
+      <div class="form-status" id="cf-status" role="status" aria-live="polite"></div>
+    </form>
+    <aside class="contact-cards reveal reveal--right" aria-label="Coordonnées">
+      <div class="contact-card"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-calendar"/></svg><div><strong>Réserver une date</strong><p>Pour une demande de réservation, utilisez le <a href="/reservation/">parcours dédié</a> : il rassemble toutes les informations utiles.</p></div></div>
+      <div class="contact-card" data-contact-email hidden><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-mail"/></svg><div><strong>Email</strong><p></p></div></div>
+      <div class="contact-card" data-contact-phone hidden><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-phone"/></svg><div><strong>Téléphone</strong><p></p></div></div>
+      <div class="notice" data-contact-missing><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-info"/></svg><p>Les coordonnées directes (email, téléphone) seront affichées ici dès qu’elles auront été validées par WAWA PHOTOBOOTH. En attendant, utilisez le formulaire.</p></div>
+    </aside>
+  </div>
+</section>
+</main>
+<!--@footer-->
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <img src="/media/img/logo-complet-or.webp" width="900" height="894" alt="WAWA PHOTOBOOTH — Capturez l’instant, gardez l’émotion." loading="lazy">
+      
+    </div>
+    <div><h2>Navigation</h2><ul><li><a href="/">Accueil</a></li><li><a href="/prestations/">Nos formules</a></li><li><a href="/galerie/">Galerie</a></li><li><a href="/reservation/">Réservation</a></li><li><a href="/a-propos/">À propos</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h2>Informations</h2><ul><li><a href="/faq/">Questions fréquentes</a></li><li><a href="/mentions-legales/">Mentions légales</a></li><li><a href="/politique-de-confidentialite/">Politique de confidentialité</a></li><li><a href="/cookies/">Gestion des cookies</a></li></ul></div>
+    <div><h2>Contact</h2><ul><li><a href="/contact/">Nous écrire</a></li><li><a href="/reservation/">Faire une demande de réservation</a></li></ul></div>
+  </div>
+  <div class="container footer-bottom"><span>© 2026 WAWA PHOTOBOOTH. Tous droits réservés.</span><span>Capturez l’instant, gardez l’émotion.</span></div>
+</footer>
+<!--@/footer-->
+</body>
+</html>

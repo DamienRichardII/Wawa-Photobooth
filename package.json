@@ -1,0 +1,18 @@
+{
+  "name": "wawa-photobooth-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Site multipage WAWA PHOTOBOOTH — demandes de réservation (HTML/CSS/JS + API Node sans dépendance)",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "dev": "STORAGE_DRIVER=file node server.js",
+    "start": "node server.js",
+    "layout": "node scripts/sync-layout.js",
+    "seo": "node scripts/generate-seo.js",
+    "hash-password": "node scripts/hash-password.js",
+    "gen-secrets": "node scripts/gen-secrets.js",
+    "purge": "node scripts/purge.js",
+    "test": "node --test \"tests/unit/*.test.js\"",
+    "test:e2e": "node tests/e2e/booking.mjs && node tests/e2e/booking-fail.mjs"
+  }
+}

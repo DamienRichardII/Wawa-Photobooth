@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WAWA PHOTOBOOTH — Photobooth pour vos événements</title>
+<meta name="description" content="WAWA PHOTOBOOTH : un photobooth élégant pour vos mariages, anniversaires et soirées. Découvrez nos formules et faites votre demande de réservation en ligne.">
+<meta name="theme-color" content="#14100c">
+<meta property="og:title" content="WAWA PHOTOBOOTH — Capturez l’instant, gardez l’émotion.">
+<meta property="og:description" content="Photobooth pour vos événements : formules, galerie et demande de réservation en ligne.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<link rel="icon" type="image/png" sizes="32x32" href="/media/icons/favicon-32.png">
+<link rel="apple-touch-icon" href="/media/icons/apple-touch-icon.png">
+<link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/playfair-display-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/media/img/miroir-fleurs-blanches-poster.webp" as="image" type="image/webp" fetchpriority="high">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/css/home.css">
+<script src="/js/boot.js"></script>
+<script type="module" src="/js/main.js"></script>
+<script type="module" src="/js/home.js"></script>
+</head>
+<body data-nav="accueil">
+<!--@header-->
+<a class="skip-link" href="#main">Aller au contenu principal</a>
+<header class="site-header" data-header>
+  <div class="container header-inner">
+    <a class="brand" href="/" aria-label="WAWA PHOTOBOOTH — accueil"><img src="/media/img/logo-embleme-clair.webp" width="760" height="635" alt="WAWA PHOTOBOOTH"></a>
+    <nav id="primary-nav" class="nav" aria-label="Navigation principale">
+      <ul><li><a href="/" aria-current="page">Accueil</a></li><li><a href="/prestations/">Nos formules</a></li><li><a href="/galerie/">Galerie</a></li><li><a href="/reservation/">Réservation</a></li><li><a href="/a-propos/">À propos</a></li><li><a href="/contact/">Contact</a></li></ul>
+      <div class="nav-cta"><a class="btn btn--gold" href="/reservation/">Réserver maintenant</a></div>
+    </nav>
+    <div class="header-actions">
+      
+      <a class="btn btn--outline btn--sm" href="/reservation/">Réserver</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Ouvrir le menu"><svg class="icon i-open" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-menu"/></svg><svg class="icon i-close" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-x"/></svg></button>
+    </div>
+  </div>
+</header>
+<!--@/header-->
+<main id="main">
+
+  <section class="hero" data-slide="0" aria-labelledby="hero-title">
+    <div class="hero__bg" aria-hidden="true"></div>
+    <div class="hero__sparkles" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    <button class="hero__btn hero__arrow hero__arrow--prev" type="button" data-hero-prev aria-label="Vidéo précédente"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-chevron-left"/></svg></button>
+    <button class="hero__btn hero__arrow hero__arrow--next" type="button" data-hero-next aria-label="Vidéo suivante"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-chevron-right"/></svg></button>
+    <div class="container hero__inner">
+      <div class="hero__copy">
+        <img class="hero__logo" src="/media/img/logo-embleme-or.webp" width="760" height="635" alt="WAWA PHOTOBOOTH" fetchpriority="high">
+        <p class="eyebrow">Photobooth pour vos événements</p>
+        <h1 id="hero-title">Capturez l’instant, <em>gardez l’émotion.</em></h1>
+        <p class="hero__lead">Un photobooth élégant pour vos mariages, anniversaires et soirées. Accessoires inclus, cadre personnalisé en option.</p>
+        <div class="hero__cta">
+          <a class="btn btn--gold btn--lg" href="/reservation/"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-calendar"/></svg>Réserver maintenant<svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-arrow-right"/></svg></a>
+          <a class="btn btn--light btn--lg" href="/prestations/">Découvrir nos formules<svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-arrow-right"/></svg></a>
+        </div>
+      </div>
+      <div class="hero__stage">
+        <div class="hero__frame">
+          <video class="hero__video" muted playsinline autoplay loop preload="metadata" poster="/media/img/miroir-fleurs-blanches-poster.webp" width="576" height="1024" aria-label="Photobooth WAWA avec fleurs blanches et crème">
+            <source src="/media/video/miroir-fleurs-blanches.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="hero__controls">
+          <button class="hero__btn" type="button" data-hero-prev aria-label="Vidéo précédente"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-chevron-left"/></svg></button>
+          <div class="hero__dots" role="group" aria-label="Choisir une vidéo">
+            <button class="hero__dot" type="button" aria-label="Vidéo 1" aria-current="true"></button>
+            <button class="hero__dot" type="button" aria-label="Vidéo 2" aria-current="false"></button>
+            <button class="hero__dot" type="button" aria-label="Vidéo 3" aria-current="false"></button>
+            <button class="hero__dot" type="button" aria-label="Vidéo 4" aria-current="false"></button>
+          </div>
+          <button class="hero__btn" type="button" data-hero-next aria-label="Vidéo suivante"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-chevron-right"/></svg></button>
+          <button class="hero__btn" type="button" data-hero-toggle aria-label="Mettre la vidéo en pause"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-pause"/></svg></button>
+        </div>
+        <span class="hero__live visually-hidden" aria-live="polite"></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="strip" aria-label="Nos atouts">
+    <div class="container">
+      <ul class="strip__grid">
+        <li class="strip__item"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-camera"/></svg><div><strong>Photo numérique</strong><span>Des souvenirs uniques</span></div></li>
+        <li class="strip__item"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-infinity"/></svg><div><strong>Tirages illimités</strong><span>Selon la formule</span></div></li>
+        <li class="strip__item"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-gem"/></svg><div><strong>Accessoires inclus</strong><span>Pour plus de fun</span></div></li>
+        <li class="strip__item"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-truck"/></svg><div><strong>Déplacement</strong><span>Frais éventuels à confirmer</span></div></li>
+        <li class="strip__item"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-shield"/></svg><div><strong>Demande sans engagement</strong><span>Confirmée après vérification</span></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="formules-title">
+    <div class="container">
+      <div class="formules-head">
+        <div class="section-title"><h2 id="formules-title">Nos formules</h2></div>
+        <a class="pill-link" href="/prestations/">Voir toutes les formules <svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-arrow-right"/></svg></a>
+      </div>
+      <ul class="pkg-grid" data-featured-packages>
+<!--@include:featured-packages-->
+<li class="pkg-card card reveal d1"><div class="pkg-card__media"><img src="/media/img/miroir-fleurs-blanches-poster.webp" alt="Photobooth WAWA avec composition de fleurs blanches et crème" width="576" height="1024" loading="lazy" decoding="async"></div><div class="pkg-card__body"><h3>Formule Découverte</h3><p class="pkg-price">150€</p><ul class="pkg-feats"><li><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-check"/></svg><span>Photo numérique</span></li><li><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-check"/></svg><span>3h de présence</span></li><li><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-check"/></svg><span>Accessoires inclus</span></li></ul><a class="btn btn--brown" href="/reservation/?formule=decouverte">Choisir cette formule</a></div></li><li class="pkg-card card reveal d2"><div class="pkg-card__media"><img src="/media/img/miroir-logo-led-poster.webp" alt="Photobooth WAWA avec cadre lumineux LED" width="576" height="1024" loading="lazy" decoding="async"></div><div class="pkg-card__body"><h3>Formule Évasion</h3><p class="pkg-price">200€</p><ul class="pkg-feats"><li><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-check"/></svg><span>Photo numérique</span></li><li><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-check"/></svg><span>4h de présence</span></li><li><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-check"/></svg><span>Accessoires inclus</span></li></ul><a class="btn btn--brown" href="/reservation/?formule=evasion">Choisir cette formule</a></div></li><li class="pkg-card card reveal d3"><div class="pkg-card__media"><img src="/media/img/miroir-ecran-fete-poster.webp" alt="Photobooth WAWA lors d’une soirée avec écran d’accueil festif" width="576" height="1024" loading="lazy" decoding="async"></div><div class="pkg-card__body"><h3>Formule Passion</h3><p class="pkg-price">250€</p><ul class="pkg-feats"><li><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-check"/></svg><span>Photo numérique</span></li><li><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-check"/></svg><span>5h de présence</span></li><li><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-check"/></svg><span>Accessoires inclus</span></li></ul><a class="btn btn--brown" href="/reservation/?formule=passion">Choisir cette formule</a></div></li><li class="pkg-card card reveal d4"><div class="pkg-card__media"><img src="/media/img/miroir-fleurs-jaunes-poster.webp" alt="Photobooth WAWA décoré de fleurs jaunes et blanches" width="576" height="1024" loading="lazy" decoding="async"></div><div class="pkg-card__body"><h3>Formule Émotion</h3><p class="pkg-price">300€</p><ul class="pkg-feats"><li><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-check"/></svg><span>Photo numérique</span></li><li><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-check"/></svg><span>6h de présence</span></li><li><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-check"/></svg><span>Accessoires inclus</span></li></ul><a class="btn btn--brown" href="/reservation/?formule=emotion">Choisir cette formule</a></div></li>
+<!--@/include-->
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--white" aria-labelledby="moments-title">
+    <div class="container moments">
+      <div class="reveal reveal--left">
+        <p class="eyebrow">Pour chaque occasion</p>
+        <h2 id="moments-title">Des souvenirs inoubliables pour tous vos événements</h2>
+        <p class="lead">Mariage, anniversaire, soirée privée ou événement professionnel : racontez-nous votre occasion, nous revenons vers vous avec une proposition adaptée.</p>
+        <ul class="moments__list">
+          <li><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-heart"/></svg>Mariage</li>
+          <li><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-sparkles"/></svg>Anniversaire</li>
+          <li><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-star"/></svg>Soirée privée</li>
+          <li><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-users"/></svg>Événement pro</li>
+        </ul>
+      </div>
+      <div class="collage reveal reveal--right" aria-hidden="true">
+        <figure class="polaroid"><img src="/media/img/miroir-fleurs-blanches-poster.webp" alt="" width="576" height="1024" loading="lazy"></figure>
+        <figure class="polaroid"><img src="/media/img/miroir-ecran-fete-poster.webp" alt="" width="576" height="1024" loading="lazy"></figure>
+        <figure class="polaroid"><img src="/media/img/miroir-fleurs-jaunes-poster.webp" alt="" width="576" height="1024" loading="lazy"></figure>
+        <div class="logo-card"><img src="/media/img/logo-embleme-or.webp" width="760" height="635" alt="" loading="lazy"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="steps-title">
+    <div class="container">
+      <div class="section-title"><h2 id="steps-title">Votre demande en 4 étapes</h2></div>
+      <ol class="steps">
+        <li class="step reveal d1"><span class="step__n" aria-hidden="true">1</span><h3>Racontez-nous votre événement</h3><p>Occasion, lieu, date, heure et nombre d’invités.</p></li>
+        <li class="step reveal d2"><span class="step__n" aria-hidden="true">2</span><h3>Choisissez votre formule</h3><p>Parmi nos formules, ou laissez-nous vous conseiller.</p></li>
+        <li class="step reveal d3"><span class="step__n" aria-hidden="true">3</span><h3>Laissez vos coordonnées</h3><p>Pour que notre équipe puisse vous recontacter.</p></li>
+        <li class="step reveal d4"><span class="step__n" aria-hidden="true">4</span><h3>Nous confirmons</h3><p>Après vérification des disponibilités et des modalités.</p></li>
+      </ol>
+      <p class="center reveal mt-lg"><a class="btn btn--gold btn--lg" href="/reservation/">Commencer ma demande<svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-arrow-right"/></svg></a></p>
+    </div>
+  </section>
+
+  <section class="section section--cream" aria-labelledby="galerie-title">
+    <div class="container">
+      <div class="formules-head">
+        <div class="section-title"><h2 id="galerie-title">En images</h2></div>
+        <a class="pill-link" href="/galerie/">Voir la galerie <svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-arrow-right"/></svg></a>
+      </div>
+      <ul class="teaser">
+        <li class="reveal d1"><a href="/galerie/" aria-label="Voir la galerie — vidéo : photobooth avec fleurs blanches"><img src="/media/img/miroir-fleurs-blanches-poster.webp" alt="" width="576" height="1024" loading="lazy"><span class="play"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-play"/></svg></span></a></li>
+        <li class="reveal d2"><a href="/galerie/" aria-label="Voir la galerie — vidéo : cadre lumineux LED"><img src="/media/img/miroir-logo-led-poster.webp" alt="" width="576" height="1024" loading="lazy"><span class="play"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-play"/></svg></span></a></li>
+        <li class="reveal d3"><a href="/galerie/" aria-label="Voir la galerie — vidéo : soirée avec écran festif"><img src="/media/img/miroir-ecran-fete-poster.webp" alt="" width="576" height="1024" loading="lazy"><span class="play"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-play"/></svg></span></a></li>
+        <li class="reveal d4"><a href="/galerie/" aria-label="Voir la galerie — vidéo : fleurs jaunes"><img src="/media/img/miroir-fleurs-jaunes-poster.webp" alt="" width="576" height="1024" loading="lazy"><span class="play"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-play"/></svg></span></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-label="Informations pratiques">
+    <div class="container">
+      <ul class="infos">
+        <li class="reveal d1"><div class="info"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-clock"/></svg><div><strong>Demande en ligne</strong><p>Étudiée par notre équipe, confirmée après vérification des disponibilités.</p></div></div></li>
+        <li class="reveal d2"><div class="info"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-pin"/></svg><div><strong>Lieu de l’événement</strong><p>Des frais de déplacement éventuels sont confirmés par l’équipe.</p></div></div></li>
+        <li class="reveal d3"><div class="info"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-sparkles"/></svg><div><strong>Sur mesure</strong><p>Cadre personnalisé en option : logo, date ou message.</p></div></div></li>
+        <li class="reveal d4"><div class="info"><svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-mail"/></svg><div><strong>Une question ?</strong><p><a href="/contact/">Écrivez-nous</a> ou consultez la <a href="/faq/">FAQ</a>.</p></div></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="cta-band" aria-labelledby="cta-title">
+    <div class="container reveal">
+      <h2 id="cta-title">Prêt à immortaliser votre événement ?</h2>
+      <p>Faites votre demande en quelques minutes. Aucun paiement n’est demandé : notre équipe vous recontacte pour confirmer.</p>
+      <a class="btn btn--gold btn--lg" href="/reservation/">Réserver maintenant<svg class="icon" aria-hidden="true" focusable="false"><use href="/media/icons/sprite.svg#i-arrow-right"/></svg></a>
+    </div>
+  </section>
+
+</main>
+<!--@footer-->
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <img src="/media/img/logo-complet-or.webp" width="900" height="894" alt="WAWA PHOTOBOOTH — Capturez l’instant, gardez l’émotion." loading="lazy">
+      
+    </div>
+    <div><h2>Navigation</h2><ul><li><a href="/">Accueil</a></li><li><a href="/prestations/">Nos formules</a></li><li><a href="/galerie/">Galerie</a></li><li><a href="/reservation/">Réservation</a></li><li><a href="/a-propos/">À propos</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h2>Informations</h2><ul><li><a href="/faq/">Questions fréquentes</a></li><li><a href="/mentions-legales/">Mentions légales</a></li><li><a href="/politique-de-confidentialite/">Politique de confidentialité</a></li><li><a href="/cookies/">Gestion des cookies</a></li></ul></div>
+    <div><h2>Contact</h2><ul><li><a href="/contact/">Nous écrire</a></li><li><a href="/reservation/">Faire une demande de réservation</a></li></ul></div>
+  </div>
+  <div class="container footer-bottom"><span>© 2026 WAWA PHOTOBOOTH. Tous droits réservés.</span><span>Capturez l’instant, gardez l’émotion.</span></div>
+</footer>
+<!--@/footer-->
+</body>
+</html>

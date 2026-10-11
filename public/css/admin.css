@@ -1,0 +1,32 @@
+body.admin { background: #f6f3ec; color: #14100c; font: 15px/1.5 system-ui, "Inter", sans-serif; }
+.adm { max-width: 1180px; margin: 0 auto; padding: 20px 16px 60px; }
+.adm h1, .adm h2, .adm h3 { font-family: inherit; margin: 0 0 .4em; }
+.muted { color: #6b6257; }
+.adm-login { max-width: 400px; margin: 10vh auto; background: #fff; padding: 28px; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,.08); display: grid; gap: 14px; }
+.adm label { display: grid; gap: 4px; font-weight: 600; font-size: .9rem; }
+.adm input, .adm select, .adm textarea { font: inherit; padding: 10px 12px; border: 1px solid #cfc6b6; border-radius: 10px; background: #fff; min-height: 44px; }
+.adm input:focus-visible, .adm select:focus-visible, .adm button:focus-visible, .adm a:focus-visible { outline: 3px solid #93642d; outline-offset: 2px; }
+.adm-error { color: #9b1c1c; margin: 0; }
+.adm-notice { background: #fbf1d6; border-left: 4px solid #c9973f; padding: 10px 14px; border-radius: 8px; margin: 10px 0; }
+.adm-top { display: flex; flex-wrap: wrap; gap: 12px 18px; align-items: center; padding-bottom: 14px; border-bottom: 1px solid #ddd3c2; }
+.adm-tabs { display: flex; gap: 6px; flex-wrap: wrap; flex: 1; }
+.adm-tabs button { border: 0; background: transparent; padding: 8px 14px; border-radius: 999px; cursor: pointer; font: inherit; font-weight: 600; }
+.adm-tabs button[aria-current="page"] { background: #14100c; color: #fff; }
+.adm-bar { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0; align-items: end; }
+.adm-bar label { min-width: 150px; }
+.adm-table-wrap { overflow-x: auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,.05); }
+.adm table { width: 100%; border-collapse: collapse; min-width: 720px; }
+.adm th, .adm td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #eee6d6; vertical-align: top; }
+.adm th { font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; color: #6b6257; }
+.adm tr.row-click { cursor: pointer; } .adm tr.row-click:hover { background: #fdf8ec; }
+.badge { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: .78rem; font-weight: 700; background: #eee; }
+.badge[data-s="nouvelle"] { background: #ffe8b3; } .badge[data-s="a-contacter"] { background: #ffd2c2; } .badge[data-s="devis-envoye"] { background: #d6e6ff; }
+.badge[data-s="confirmee"] { background: #cdeccd; } .badge[data-s="annulee"] { background: #e6e6e6; }
+.adm-detail { background: #fff; border-radius: 12px; padding: 20px; margin-top: 14px; box-shadow: 0 2px 12px rgba(0,0,0,.05); }
+.adm-detail dl { display: grid; grid-template-columns: 170px 1fr; gap: 6px 14px; margin: 0 0 16px; }
+.adm-detail dt { color: #6b6257; } .adm-detail dd { margin: 0; overflow-wrap: anywhere; }
+.adm-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; }
+.adm-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; }
+.adm .btn { cursor: pointer; }
+.btn--danger { border: 1px solid #9b1c1c; color: #9b1c1c; background: #fff; border-radius: 999px; padding: .55rem 1.1rem; font: inherit; font-weight: 600; }
+@media (max-width: 640px) { .adm-detail dl { grid-template-columns: 1fr; } .adm-bar label { flex: 1 1 100%; } }
