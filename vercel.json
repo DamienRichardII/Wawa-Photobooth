@@ -4,7 +4,6 @@
   "buildCommand": null,
   "outputDirectory": "public",
   "cleanUrls": false,
-  "trailingSlash": true,
   "functions": {
     "api/**/*.js": { "includeFiles": "config/**", "maxDuration": 15 }
   },
