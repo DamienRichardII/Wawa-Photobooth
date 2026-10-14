@@ -2,7 +2,7 @@
   "_meta": "Informations publiques du site. Toute valeur null = NON FOURNIE par Wawa Photobooth : le site affiche alors « à renseigner » ou masque l'élément. Ne rien inventer ici.",
   "brand": "WAWA PHOTOBOOTH",
   "tagline": "Capturez l'instant, gardez l'émotion.",
-  "siteUrl": null,
+  "siteUrl": "https://www.wawaphotobooth77.fr",
   "contact": {
     "email": null,
     "phone": null,

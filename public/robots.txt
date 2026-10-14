@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin/
 Disallow: /api/
+Sitemap: https://www.wawaphotobooth77.fr/sitemap.xml
