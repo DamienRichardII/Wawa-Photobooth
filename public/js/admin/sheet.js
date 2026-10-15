@@ -93,7 +93,7 @@ function render(r, events) {
   ]);
   const prest = el('dl', { class: 'facts' }, [
     ...fact('Photobooth', r.photobooth_requested ? tag('Oui', 'good') : tag('Non')),
-    r.photobooth_requested && pkg && pkg.booth ? fact('Photobooth', pkg.booth === 'bois' ? 'Photobooth boisé (nouveau)' : 'Photobooth classique') : [],
+    r.photobooth_requested && pkg && pkg.booth ? fact('Photobooth', pkg.booth === 'bois' ? 'Photobooth boisé (nouveau)' : 'Photobooth miroir') : [],
     r.photobooth_requested ? fact('Formule', pkg ? `${pkg.name}${pkg.price_eur != null ? ` · ${pkg.price_eur} €` : ''}${pkg.duration_hours ? ` · ${pkg.duration_hours} h` : ''}` : 'Aucune choisie') : [],
     ...fact('Bar à magnets', r.magnet_bar_requested ? tag('Oui', 'good') : tag('Non')),
     r.couple_first_names ? fact('Inscription tirages', r.couple_first_names) : [],

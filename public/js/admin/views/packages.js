@@ -3,7 +3,7 @@ import { api, errorText } from '../api.js';
 import { toast } from '../util.js';
 import { loadConfig } from '../../lib/api.js';
 
-const BOOTH = { classique: 'Photobooth classique', bois: 'Photobooth boisé (nouveau)' };
+const BOOTH = { classique: 'Photobooth miroir', bois: 'Photobooth boisé (nouveau)' };
 const FAMILY = { numerique: 'Photo numérique', tirages: 'Tirages illimités', autre: 'Autre' };
 export async function render(box, params, rerender) {
   box.replaceChildren(el('p', { class: 'empty', text: 'Chargement…' }));

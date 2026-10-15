@@ -42,7 +42,7 @@ const parisToday = () => new Date().toLocaleDateString('en-CA', { timeZone: 'Eur
 const addDays = (iso, n) => { const d = new Date(`${iso}T00:00:00Z`); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); };
 const frDate = (iso) => { try { return new Intl.DateTimeFormat('fr-FR', { dateStyle: 'full', timeZone: 'UTC' }).format(new Date(`${iso}T12:00:00Z`)); } catch { return iso; } };
 const boothOf = (p) => p.booth || 'classique';
-const BOOTH_LABEL = { classique: 'Photobooth classique', bois: 'Nouveau Photobooth boisé' };
+const BOOTH_LABEL = { classique: 'Photobooth miroir', bois: 'Nouveau Photobooth boisé' };
 const packagesForModel = () => cfg.packages.filter((p) => boothOf(p) === state.photobooth_model);
 const activePackage = () => packagesForModel().find((p) => p.id === state.photobooth_package_id) || null;
 
