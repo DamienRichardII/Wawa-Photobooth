@@ -236,3 +236,6 @@ dialog.confirm.wide { max-width: 720px; }
 .pw__slash { display: none; } .pw__toggle[aria-pressed=true] .pw__slash { display: inline; }
 
 .demo-banner { background: #1c1710; color: #f3dfa6; text-align: center; padding: 8px 12px; font-size: .85rem; position: sticky; top: 0; z-index: 80; }
+
+.login__forgot, a.login__foot { text-align: center; font-size: .9rem; color: var(--gold-deep, #8a6420); text-decoration: underline; }
+.login a.abtn { text-align: center; justify-content: center; text-decoration: none; }

@@ -11,7 +11,7 @@ const totp = require('../../lib/totp');
 
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'wawa-'));
 const STORE_FILE = path.join(tmp, 'store.json');
-const ENV_KEYS = ['STORAGE_DRIVER', 'DEV_STORE_FILE', 'SESSION_SECRET', 'ADMIN_EMAIL', 'ADMIN_PASSWORD_HASH', 'ADMIN_TOTP_SECRET', 'DATA_ENCRYPTION_KEY', 'MIN_FILL_MS', 'VERCEL', 'NODE_ENV', 'RESEND_API_KEY', 'NOTIFY_EMAIL_TO', 'CRON_SECRET', 'RETENTION_MONTHS', 'SUPABASE_URL', 'SUPABASE_PUBLISHABLE_KEY'];
+const ENV_KEYS = ['STORAGE_DRIVER', 'DEV_STORE_FILE', 'SESSION_SECRET', 'ADMIN_EMAIL', 'ADMIN_PASSWORD_HASH', 'ADMIN_TOTP_SECRET', 'DATA_ENCRYPTION_KEY', 'MIN_FILL_MS', 'VERCEL', 'NODE_ENV', 'RESEND_API_KEY', 'NOTIFY_EMAIL_TO', 'CRON_SECRET', 'RETENTION_MONTHS', 'SUPABASE_URL', 'SUPABASE_PUBLISHABLE_KEY', 'SUPABASE_SERVICE_ROLE_KEY', 'EMAIL_FROM', 'SITE_ORIGIN'];
 function setEnv(o) { for (const k of ENV_KEYS) delete process.env[k]; Object.assign(process.env, o); resetBackend(); rl.reset(); }
 
 const server = require('../../server');
@@ -258,5 +258,42 @@ test('administration via Supabase Auth : identifiant + mot de passe, liste blanc
     assert.equal((await fetch(base + '/api/admin/me', { headers: { cookie } })).status, 200);
     fs.writeFileSync(STORE_FILE, JSON.stringify({ admin_users: [] }));
     assert.equal((await fetch(base + '/api/admin/me', { headers: { cookie } })).status, 401);
+  } finally { global.fetch = realFetch; }
+});
+
+test('mot de passe oublié : lien par e-mail, usage unique, liste blanche, réponse générique', async () => {
+  const realFetch = global.fetch; const sent = []; const pwSet = []; let used = false;
+  global.fetch = async (url, init = {}) => {
+    const u = String(url); const j = (st, d) => ({ ok: st < 300, status: st, json: async () => d });
+    if (u === 'https://api.resend.com/emails') { sent.push(JSON.parse(init.body)); return j(200, {}); }
+    if (!u.startsWith('https://proj.supabase.co/auth/v1/')) return realFetch(url, init);
+    const b = init.body ? JSON.parse(init.body) : {};
+    if (u.endsWith('/admin/generate_link')) return j(200, { hashed_token: 'tok_' + b.email.replace(/\W/g, '') });
+    if (u.endsWith('/verify')) { if (used || !b.token_hash.startsWith('tok_')) return j(400, {}); used = true; return j(200, { access_token: 'sess', user: { email: b.token_hash === 'tok_okexamplecom' ? 'ok@example.com' : 'intrus@example.com' } }); }
+    if (u.endsWith('/user') && init.method === 'PUT') { pwSet.push(b.password); return j(200, {}); }
+    return j(404, {});
+  };
+  try {
+    setEnv({ STORAGE_DRIVER: 'file', DEV_STORE_FILE: STORE_FILE, SESSION_SECRET: 'x'.repeat(48), SUPABASE_URL: 'https://proj.supabase.co', SUPABASE_PUBLISHABLE_KEY: 'sb_publishable_' + 'k'.repeat(30), SUPABASE_SERVICE_ROLE_KEY: 's'.repeat(40), RESEND_API_KEY: 'rk', EMAIL_FROM: 'a@b.fr', SITE_ORIGIN: 'https://site.example' });
+    fs.writeFileSync(STORE_FILE, JSON.stringify({ admin_users: [{ email: 'ok@example.com', role: 'admin' }] }));
+    resetBackend();
+    // adresse inconnue : même réponse, aucun e-mail
+    let r = await post('/api/admin/password-reset', { email: 'inconnu@example.com' });
+    assert.equal(r.status, 200); assert.equal(sent.length, 0);
+    r = await post('/api/admin/password-reset', { email: 'ok@example.com' });
+    assert.equal(r.status, 200); assert.deepEqual(await r.json(), { ok: true });
+    assert.equal(sent.length, 1); assert.deepEqual(sent[0].to, ['ok@example.com']);
+    assert.match(sent[0].text, /https:\/\/site\.example\/admin\/reset\/#t=tok_okexamplecom/);
+    // mot de passe trop court / jeton invalide
+    assert.equal((await post('/api/admin/password-reset-confirm', { token: 'tok_okexamplecom', password: 'court' })).status, 422);
+    assert.equal((await post('/api/admin/password-reset-confirm', { token: 'zzzzzzzzzzzz!', password: 'un-mot-de-passe-long-1' })).status, 400);
+    r = await post('/api/admin/password-reset-confirm', { token: 'tok_okexamplecom', password: 'un-mot-de-passe-long-1' });
+    assert.equal(r.status, 200); assert.deepEqual(pwSet, ['un-mot-de-passe-long-1']);
+    // lien déjà utilisé
+    assert.equal((await post('/api/admin/password-reset-confirm', { token: 'tok_okexamplecom', password: 'un-autre-mot-de-passe-2' })).status, 400);
+    // jeton valide mais compte hors liste blanche : refusé, mot de passe inchangé
+    used = false;
+    r = await post('/api/admin/password-reset-confirm', { token: 'tok_intrusexamplecom', password: 'un-mot-de-passe-long-3' });
+    assert.equal(r.status, 400); assert.equal(pwSet.length, 1);
   } finally { global.fetch = realFetch; }
 });

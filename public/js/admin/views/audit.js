@@ -2,7 +2,7 @@ import { el } from '../../lib/dom.js';
 import { api, errorText } from '../api.js';
 import { fmtDateTime } from '../util.js';
 
-const LABEL = { login_ok: 'Connexion réussie', login_failed: 'Échec de connexion', list_requests: 'Consultation de la liste des demandes', view_request: 'Consultation d’une demande', status_change: 'Changement de statut', export: 'Export CSV', list_messages: 'Consultation des messages', message_status: 'Statut d’un message', package_upsert: 'Formule enregistrée', packages_seeded: 'Formules importées', note_added: 'Note interne ajoutée', contact_logged: 'Contact tracé', delete_request: 'Demande supprimée', purge: 'Purge RGPD' };
+const LABEL = { password_reset_requested: 'Lien de réinitialisation envoyé', password_reset_done: 'Mot de passe réinitialisé', login_ok: 'Connexion réussie', login_failed: 'Échec de connexion', list_requests: 'Consultation de la liste des demandes', view_request: 'Consultation d’une demande', status_change: 'Changement de statut', export: 'Export CSV', list_messages: 'Consultation des messages', message_status: 'Statut d’un message', package_upsert: 'Formule enregistrée', packages_seeded: 'Formules importées', note_added: 'Note interne ajoutée', contact_logged: 'Contact tracé', delete_request: 'Demande supprimée', purge: 'Purge RGPD' };
 export async function render(box) {
   box.replaceChildren(el('p', { class: 'empty', text: 'Chargement…' }));
   let d; try { d = await api('audit'); } catch (e) { box.replaceChildren(el('p', { class: 'error-text', text: errorText(e) })); return; }

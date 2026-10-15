@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mot de passe — Administration WAWA PHOTOBOOTH</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<link rel="icon" href="/media/icons/favicon-32.png" type="image/png">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/css/admin.css">
+<script src="/js/boot.js"></script>
+</head>
+<body class="admin">
+<main class="login" id="main">
+  <!-- Étape 1 : demander le lien -->
+  <form class="login__card" id="ask-form" novalidate>
+    <img src="/media/img/logo-embleme-clair.webp" width="760" height="635" alt="WAWA PHOTOBOOTH" class="login__logo">
+    <h1>Mot de passe oublié</h1>
+    <p class="muted">Saisissez votre adresse e-mail d’administration : si elle est autorisée, vous recevrez un lien pour choisir un nouveau mot de passe.</p>
+    <label>Email<input type="email" name="email" autocomplete="username" required></label>
+    <p class="error-text" role="alert" data-ask-error hidden></p>
+    <p class="notice-box" role="status" data-ask-ok hidden>Si cette adresse est autorisée, un e-mail vient de partir (pensez à vérifier les courriers indésirables). Le lien est valable une heure.</p>
+    <button class="abtn abtn--gold abtn--lg" type="submit">Recevoir le lien</button>
+    <a class="login__foot muted" href="/admin/">← Retour à la connexion</a>
+  </form>
+
+  <!-- Étape 2 : choisir le mot de passe (arrivée depuis le lien reçu par e-mail) -->
+  <form class="login__card" id="set-form" novalidate hidden>
+    <img src="/media/img/logo-embleme-clair.webp" width="760" height="635" alt="WAWA PHOTOBOOTH" class="login__logo">
+    <h1>Nouveau mot de passe</h1>
+    <p class="muted">Choisissez un mot de passe d’au moins 12 caractères, que vous n’utilisez nulle part ailleurs.</p>
+    <label>Nouveau mot de passe<span class="pw"><input type="password" name="password" autocomplete="new-password" minlength="12" required><button type="button" class="pw__toggle" data-pw-toggle aria-label="Afficher le mot de passe" aria-pressed="false"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/><path class="pw__slash" d="M3 3l18 18"/></svg></button></span></label>
+    <label>Confirmer le mot de passe<span class="pw"><input type="password" name="confirm" autocomplete="new-password" minlength="12" required></span></label>
+    <p class="error-text" role="alert" data-set-error hidden></p>
+    <button class="abtn abtn--gold abtn--lg" type="submit">Enregistrer le mot de passe</button>
+  </form>
+
+  <!-- Terminé -->
+  <section class="login__card" data-done hidden>
+    <img src="/media/img/logo-embleme-clair.webp" width="760" height="635" alt="WAWA PHOTOBOOTH" class="login__logo">
+    <h1>Mot de passe enregistré</h1>
+    <p class="muted">Vous pouvez maintenant vous connecter avec votre nouveau mot de passe.</p>
+    <a class="abtn abtn--gold abtn--lg" href="/admin/">Aller à la connexion</a>
+  </section>
+</main>
+<script type="module" src="/js/admin/reset.js"></script>
+</body>
+</html>
