@@ -8,11 +8,15 @@ const post = async (action, body) => {
 const show = (n, t) => { n.textContent = t || ''; n.hidden = !t; };
 const busy = (f, b) => f.querySelectorAll('button[type=submit]').forEach((x) => { x.disabled = b; });
 
-const token = new URLSearchParams(location.hash.replace(/^#/, '')).get('t');
-if (token) history.replaceState(null, '', location.pathname); // retire le jeton de la barre d'adresse
+const hp = new URLSearchParams(location.hash.replace(/^#/, ''));
+const token = hp.get('t'); // lien envoyé par notre e-mail
+const accessToken = hp.get('type') === 'recovery' ? hp.get('access_token') : null; // lien Supabase (redirection)
+const linkError = hp.get('error_description') || hp.get('error_code');
+if (location.hash) history.replaceState(null, '', location.pathname); // retire le jeton de la barre d'adresse
 
 const ask = $('#ask-form'); const set = $('#set-form');
-if (token) { ask.hidden = true; set.hidden = false; }
+if (token || accessToken) { ask.hidden = true; set.hidden = false; }
+if (linkError) show($('[data-ask-error]'), 'Ce lien est invalide ou expiré. Saisissez votre e-mail pour en recevoir un nouveau.');
 
 document.querySelectorAll('[data-pw-toggle]').forEach((eye) => eye.addEventListener('click', () => {
   const on = eye.closest('form').querySelector('input[name=password]').type === 'password';
@@ -35,7 +39,7 @@ set.addEventListener('submit', async (e) => {
   if (pw.length < 12) return show(err, 'Le mot de passe doit contenir au moins 12 caractères.');
   if (pw !== fd.get('confirm')) return show(err, 'Les deux mots de passe ne sont pas identiques.');
   busy(set, true);
-  const r = await post('password-reset-confirm', { token, password: pw });
+  const r = await post('password-reset-confirm', accessToken ? { access_token: accessToken, password: pw } : { token, password: pw });
   busy(set, false);
   if (r.ok) { set.hidden = true; $('[data-done]').hidden = false; return; }
   show(err, r.code === 'invalid_token' ? 'Ce lien est invalide ou expiré. Demandez-en un nouveau.' : r.code === 'weak_password' ? 'Mot de passe refusé : choisissez-en un plus long ou plus complexe.' : r.code === 'rate_limited' ? 'Trop de tentatives : réessayez dans quelques minutes.' : 'Enregistrement impossible. Réessayez.');

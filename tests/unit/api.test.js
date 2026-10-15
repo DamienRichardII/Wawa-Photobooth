@@ -270,6 +270,7 @@ test('mot de passe oublié : lien par e-mail, usage unique, liste blanche, répo
     const b = init.body ? JSON.parse(init.body) : {};
     if (u.endsWith('/admin/generate_link')) return j(200, { hashed_token: 'tok_' + b.email.replace(/\W/g, '') });
     if (u.endsWith('/verify')) { if (used || !b.token_hash.startsWith('tok_')) return j(400, {}); used = true; return j(200, { access_token: 'sess', user: { email: b.token_hash === 'tok_okexamplecom' ? 'ok@example.com' : 'intrus@example.com' } }); }
+    if (u.endsWith('/user') && init.method === 'GET') return init.headers.Authorization === 'Bearer sess-supabase-link-0000' ? j(200, { email: 'ok@example.com' }) : j(401, {});
     if (u.endsWith('/user') && init.method === 'PUT') { pwSet.push(b.password); return j(200, {}); }
     return j(404, {});
   };
@@ -295,5 +296,9 @@ test('mot de passe oublié : lien par e-mail, usage unique, liste blanche, répo
     used = false;
     r = await post('/api/admin/password-reset-confirm', { token: 'tok_intrusexamplecom', password: 'un-mot-de-passe-long-3' });
     assert.equal(r.status, 400); assert.equal(pwSet.length, 1);
+    // lien Supabase (redirection) : jeton de session valide / invalide
+    assert.equal((await post('/api/admin/password-reset-confirm', { access_token: 'faux-jeton-faux-jeton-0000', password: 'un-mot-de-passe-long-4' })).status, 400);
+    r = await post('/api/admin/password-reset-confirm', { access_token: 'sess-supabase-link-0000', password: 'un-mot-de-passe-long-4' });
+    assert.equal(r.status, 200); assert.equal(pwSet.length, 2);
   } finally { global.fetch = realFetch; }
 });
