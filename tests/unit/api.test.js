@@ -21,7 +21,7 @@ test.after(() => { server.close(); fs.rmSync(tmp, { recursive: true, force: true
 
 const body = (over = {}) => ({
   event_type: 'mariage', event_address: '12 rue de la Paix, 75002 Paris', installation_type: 'indoor',
-  photobooth_requested: true, photobooth_package_id: 'decouverte', magnet_bar_requested: false, couple_first_names: 'Aya et Sam',
+  photobooth_requested: true, photobooth_model: 'classique', photobooth_package_id: 'decouverte', magnet_bar_requested: false, couple_first_names: 'Aya et Sam',
   event_date: '2999-06-12'.replace('2999', String(new Date().getFullYear() + 1)), start_time: '18:00', guest_count: 120,
   first_name: 'Aya', last_name: 'Martin', email: 'aya.martin@example.com', phone: '+33600000000',
   started_at: Date.now() - 60000, website: '', idempotency_key: crypto.randomUUID(), ...over
@@ -35,10 +35,19 @@ test('sans stockage configuré : 503 explicite, jamais de faux succès', async (
   assert.equal((await r.json()).error, 'service_not_configured');
   const p = await (await fetch(base + '/api/packages')).json();
   assert.equal(p.bookingAvailable, false);
-  assert.equal(p.packages.length, 16);
+  assert.equal(p.packages.length, 32);
+  assert.equal(p.packages.filter((x) => x.booth === 'bois').length, 16);
+  assert.equal(p.packages.find((x) => x.id === 'bois-decouverte').price_eur, 130);
   assert.equal(p.packages[0].id, 'decouverte');
   assert.equal(p.packages.find((x) => x.id === 'supreme').price_eur, 600);
   assert.equal((await post('/api/contact', { name: 'x' })).status, 503);
+});
+
+test('formule d’un autre modèle de Photobooth refusée (422)', async () => {
+  setEnv({ STORAGE_DRIVER: 'file', DEV_STORE_FILE: STORE_FILE });
+  const r = await post('/api/booking-requests', body({ photobooth_model: 'bois', photobooth_package_id: 'decouverte', idempotency_key: crypto.randomUUID() }));
+  assert.equal(r.status, 422);
+  assert.ok((await r.json()).fields.photobooth_package_id);
 });
 
 test('le pilote file est refusé en production/hébergement', async () => {

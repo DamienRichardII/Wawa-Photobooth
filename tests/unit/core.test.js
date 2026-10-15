@@ -10,7 +10,7 @@ const KEY = Buffer.alloc(32, 7);
 const NOW = Date.UTC(2026, 9, 11, 12, 0, 0);
 const good = (over = {}) => ({
   event_type: 'mariage', event_address: '12 rue de la Paix, 75002 Paris', installation_type: 'indoor',
-  photobooth_requested: true, photobooth_package_id: 'decouverte', magnet_bar_requested: false, couple_first_names: 'Aya et Sam',
+  photobooth_requested: true, photobooth_model: 'classique', photobooth_package_id: 'decouverte', magnet_bar_requested: false, couple_first_names: 'Aya et Sam',
   event_date: '2027-06-12', start_time: '18:00', guest_count: 120,
   first_name: 'Aya', last_name: 'Martin', email: 'Aya.Martin@Example.com', phone: '+33 6 00 00 00 00',
   started_at: NOW - 60000, website: '', ...over

@@ -14,7 +14,7 @@ const card = $('#bk-card');
 const startedAt = Date.now();
 const state = {
   event_type: null, event_type_other: '', event_address: '', address_place_id: null, installation_type: null,
-  photobooth_requested: null, photobooth_package_id: null, magnet_bar_requested: null, couple_first_names: '',
+  photobooth_requested: null, photobooth_model: null, photobooth_package_id: null, magnet_bar_requested: null, couple_first_names: '',
   event_date: '', start_time: '', guest_count: '', first_name: '', last_name: '', email: '', phone: '', marketing_consent: false
 };
 let cfg = { packages: [], included: [], bookingAvailable: true, config: { marketingConsentEnabled: false, henneAskCoupleNames: false, minLeadDays: 0, addressAutocomplete: null, contact: {} } };
@@ -28,7 +28,7 @@ let submitted = false;
 
 const DRAFT_KEY = 'wawa_booking_draft_v1';
 const DRAFT_TTL = 2 * 3600 * 1000;
-const DRAFT_FIELDS = ['event_type', 'installation_type', 'photobooth_requested', 'photobooth_package_id', 'magnet_bar_requested', 'guest_count'];
+const DRAFT_FIELDS = ['event_type', 'installation_type', 'photobooth_requested', 'photobooth_model', 'photobooth_package_id', 'magnet_bar_requested', 'guest_count'];
 const loadDraft = () => { try { const d = JSON.parse(sessionStorage.getItem(DRAFT_KEY) || 'null'); if (!d) return null; if (Date.now() - d.t > DRAFT_TTL) { sessionStorage.removeItem(DRAFT_KEY); return null; } return d.v; } catch { return null; } };
 const saveDraft = () => { try { const v = {}; DRAFT_FIELDS.forEach((k) => { v[k] = state[k]; }); sessionStorage.setItem(DRAFT_KEY, JSON.stringify({ t: Date.now(), v })); } catch { /* stockage indisponible : sans conséquence */ } };
 const clearDraft = () => { try { sessionStorage.removeItem(DRAFT_KEY); } catch { /* */ } };
@@ -41,7 +41,10 @@ const coupleApplies = () => state.photobooth_requested === true; // « Inscripti
 const parisToday = () => new Date().toLocaleDateString('en-CA', { timeZone: 'Europe/Paris' });
 const addDays = (iso, n) => { const d = new Date(`${iso}T00:00:00Z`); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); };
 const frDate = (iso) => { try { return new Intl.DateTimeFormat('fr-FR', { dateStyle: 'full', timeZone: 'UTC' }).format(new Date(`${iso}T12:00:00Z`)); } catch { return iso; } };
-const activePackage = () => cfg.packages.find((p) => p.id === state.photobooth_package_id) || null;
+const boothOf = (p) => p.booth || 'classique';
+const BOOTH_LABEL = { classique: 'Photobooth classique', bois: 'Nouveau Photobooth boisé' };
+const packagesForModel = () => cfg.packages.filter((p) => boothOf(p) === state.photobooth_model);
+const activePackage = () => packagesForModel().find((p) => p.id === state.photobooth_package_id) || null;
 
 // ── Erreurs ──────────────────────────────────────────────────────────────────
 function setFieldError(name, message) {
@@ -82,7 +85,12 @@ const validators = {
     if (!state.installation_type) e.installation_type = 'Indiquez si l’installation se fait en intérieur ou en extérieur.';
     return e;
   },
-  photobooth: () => { const e = {}; if (state.photobooth_requested === null) e.photobooth_requested = 'Répondez par Oui ou par Non.'; return e; },
+  photobooth: () => {
+    const e = {};
+    if (state.photobooth_requested === null) e.photobooth_requested = 'Répondez par Oui ou par Non.';
+    else if (state.photobooth_requested === true && !state.photobooth_model) e.photobooth_model = 'Choisissez un modèle de Photobooth.';
+    return e;
+  },
   package: () => {
     const e = {};
     if (state.photobooth_requested === true && cfg.packages.length > 0 && !activePackage()) e.photobooth_package_id = 'Choisissez une formule.';
@@ -191,9 +199,15 @@ function renderPackages() {
     return;
   }
   const groups = {};
-  cfg.packages.forEach((p) => { (groups[p.family || 'autre'] = groups[p.family || 'autre'] || []).push(p); });
+  const list = packagesForModel();
+  if (!list.length) {
+    box.replaceChildren(el('div', { class: 'notice' }, [icon('info'), el('p', { class: 'mb-0', text: 'Aucune formule n’est disponible pour ce modèle pour le moment : poursuivez, notre équipe vous recontactera.' })]));
+    return;
+  }
+  list.forEach((p) => { (groups[p.family || 'autre'] = groups[p.family || 'autre'] || []).push(p); });
   const order = ['numerique', 'tirages', 'autre'].filter((k) => groups[k]);
-  box.replaceChildren(...order.map((fam) => el('div', { class: 'pkg-group' }, [
+  const head = state.photobooth_model ? el('p', { class: 'pkg-model' }, [icon('camera'), el('strong', { text: BOOTH_LABEL[state.photobooth_model] }), state.photobooth_model === 'bois' ? el('span', { class: 'pkg-model__tag', text: 'Offre de lancement' }) : null, el('button', { type: 'button', class: 'recap__edit', onclick: () => goTo('photobooth', 'back') }, ['Changer de modèle'])]) : null;
+  box.replaceChildren(...[head].filter(Boolean), ...order.map((fam) => el('div', { class: 'pkg-group' }, [
     el('h3', {}, [icon(fam === 'tirages' ? 'infinity' : 'camera'), FAMILY_LABEL[fam] || 'Formules']),
     el('fieldset', { class: 'pkg-options', 'aria-label': FAMILY_LABEL[fam] || 'Formules' }, groups[fam].map((p) => {
       const meta = [fam === 'autre' ? p.print_allowance : null, durationLabel(p.duration_hours), p.description].filter(Boolean);
@@ -231,6 +245,7 @@ function renderRecap() {
   const pbRows = [['Photobooth', state.photobooth_requested ? 'Oui' : 'Non']];
   let pbExtra = null;
   if (state.photobooth_requested) {
+    pbRows.push(['Modèle', BOOTH_LABEL[state.photobooth_model] || '—']);
     pbRows.push(['Formule', p ? p.name : cfg.packages.length ? '—' : 'Aucune (demande de devis)']);
     if (p) {
       const bits = [p.price_eur !== undefined ? euro(p.price_eur) : null, durationLabel(p.duration_hours), p.print_allowance].filter(Boolean);
@@ -256,6 +271,7 @@ function buildPayload() {
     address_place_id: state.address_place_id || null,
     installation_type: state.installation_type,
     photobooth_requested: requested,
+    photobooth_model: requested ? (state.photobooth_model || null) : null,
     magnet_bar_requested: state.magnet_bar_requested === true,
     photobooth_package_id: requested ? (state.photobooth_package_id || null) : null,
     couple_first_names: coupleApplies() && state.couple_first_names.trim() ? state.couple_first_names.trim() : null,
@@ -318,6 +334,7 @@ function applyConditionalUi() {
   fieldEl('event_type_other').hidden = state.event_type !== 'autre';
   $('[data-outdoor-warning]').hidden = state.installation_type !== 'outdoor';
   $('[data-no-photobooth]').hidden = state.photobooth_requested !== false;
+  fieldEl('photobooth_model').hidden = state.photobooth_requested !== true;
   renderMagnetInfo();
   const mk = fieldEl('marketing_consent'); mk.hidden = !cfg.config.marketingConsentEnabled;
 }
@@ -327,6 +344,7 @@ function onFieldEvent(e) {
   const t = e.target; const name = t.name; if (!name || name === 'website') return;
   if (submitted) return;
   if (name === 'photobooth_requested' || name === 'magnet_bar_requested') state[name] = t.value === 'yes';
+  else if (name === 'photobooth_model') { state.photobooth_model = t.value; if (state.photobooth_package_id && !activePackage()) state.photobooth_package_id = null; }
   else if (name === 'marketing_consent') state.marketing_consent = t.checked;
   else if (name in state) state[name] = t.value;
   if (e.type === 'change' || t.type === 'radio') { applyConditionalUi(); if (current === 'photobooth' || name === 'photobooth_requested') { renderProgress(); renderNav(); } }
@@ -400,7 +418,7 @@ function hydrateInputs() {
   const wanted = new URLSearchParams(location.search).get('formule');
   if (wanted) {
     const p = cfg.packages.find((x) => x.id === wanted);
-    if (p) { state.photobooth_requested = true; state.photobooth_package_id = p.id; preselected = p.name; saveDraft(); hydrateInputs(); applyConditionalUi(); renderProgress(); renderBanner(); }
+    if (p) { state.photobooth_requested = true; state.photobooth_model = boothOf(p); state.photobooth_package_id = p.id; preselected = p.name; saveDraft(); hydrateInputs(); applyConditionalUi(); renderProgress(); renderBanner(); }
     history.replaceState(null, '', location.pathname); // l'URL ne garde aucune donnée
   }
   // Rétablit le choix des radios « Photobooth » après restauration

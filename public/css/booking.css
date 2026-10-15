@@ -144,3 +144,15 @@
   .bk-nav__prev { justify-content: center; }
 }
 @media (max-width: 380px) { .choice-grid--3, .choice-grid--2 { grid-template-columns: 1fr 1fr; } }
+
+/* Choix du modèle de Photobooth (étape 3) */
+.booth-legend { font-weight: 600; margin: 4px 0 10px; font-size: 1.05rem; }
+.booth-grid { margin-top: 18px; }
+.booth-choice .choice__box { align-content: start; gap: 6px; padding: 10px 10px 14px; text-align: left; }
+.booth-choice img { width: 100%; height: auto; aspect-ratio: 444 / 546; object-fit: cover; border-radius: 12px; background: #efe6d4; }
+.booth-choice__tag { align-self: flex-start; font-size: .72rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; background: #1c1710; color: #f3dfa6; padding: 3px 9px; border-radius: 999px; }
+.booth-choice .choice__text { font-size: 1.05rem; }
+.booth-choice__desc { font-size: .88rem; color: var(--muted, #7a6a4a); line-height: 1.35; }
+.pkg-model { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 14px; padding: 10px 14px; background: #faf3e2; border: 1px solid #ead9ad; border-radius: 12px; }
+.pkg-model__tag { font-size: .72rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; background: #1c1710; color: #f3dfa6; padding: 3px 9px; border-radius: 999px; }
+.pkg-model .recap__edit { margin-left: auto; }

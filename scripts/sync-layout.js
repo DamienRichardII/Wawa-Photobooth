@@ -81,7 +81,7 @@ function footer() {
 const euro = (n) => `${Number(n).toLocaleString('fr-FR', { maximumFractionDigits: 2 })}€`;
 const dur = (h) => { const w = Math.floor(h); const m = Math.round((h - w) * 60); return `${w}h${m ? String(m).padStart(2, '0') : ''} de présence`; };
 function featuredPackages() {
-  const list = packagesCfg.packages.filter((p) => p.is_active && p.is_featured).sort((a, b) => a.sort_order - b.sort_order).slice(0, 4);
+  const list = packagesCfg.packages.filter((p) => p.is_active && p.is_featured && (p.booth || 'classique') === 'classique').sort((a, b) => a.sort_order - b.sort_order).slice(0, 4);
   if (!list.length) return '<li class="notice">Formules en cours de configuration.</li>';
   return list.map((p, i) => {
     const feats = [p.print_allowance, p.duration_hours ? dur(p.duration_hours) : null, (packagesCfg.included || [])[0]].filter(Boolean);
@@ -104,8 +104,8 @@ function partial(name) {
     `<div class="notice notice--warn" role="note">${ico('alert')}<p><strong>Document préparé à partir des informations disponibles — à compléter et à faire valider par WAWA PHOTOBOOTH (et un conseil juridique) avant mise en ligne.</strong> Les mentions « à renseigner » signalent des informations non fournies.</p></div>`;
   return tokens(fs.readFileSync(f, 'utf8')).replace('<!--@legal-notice-->', legalNotice);
 }
-function familyPackages(family) {
-  const list = packagesCfg.packages.filter((p) => p.is_active && p.family === family).sort((a, b) => a.sort_order - b.sort_order);
+function familyPackages(family, booth = 'classique') {
+  const list = packagesCfg.packages.filter((p) => p.is_active && p.family === family && (p.booth || 'classique') === booth).sort((a, b) => a.sort_order - b.sort_order);
   if (!list.length) return '<li class="notice">Formules en cours de configuration.</li>';
   return list.map((p, i) => {
     const feats = [p.print_allowance, p.duration_hours ? dur(p.duration_hours) : null, (packagesCfg.included || [])[0]].filter(Boolean);
@@ -115,7 +115,7 @@ function familyPackages(family) {
 function optionsBlock() {
   return (packagesCfg.options || []).map((o) => `<article class="option-card card reveal"><div class="option-card__icon">${ico('magnet')}</div><div class="option-card__body"><p class="eyebrow">${esc(o.tag || 'En option')}</p><h3>${esc(o.name)}</h3><ul class="pkg-feats">${(o.features || []).map((f) => `<li>${ico('check')}<span>${esc(f)}</span></li>`).join('')}</ul></div><div class="option-card__price"><span>À partir de</span><strong>${euro(o.price_from_eur)}</strong></div></article>`).join('');
 }
-const INCLUDES = { 'featured-packages': featuredPackages, 'packages-numerique': () => familyPackages('numerique'), 'packages-tirages': () => familyPackages('tirages'), options: optionsBlock };
+const INCLUDES = { 'featured-packages': featuredPackages, 'packages-bois-numerique': () => familyPackages('numerique', 'bois'), 'packages-bois-tirages': () => familyPackages('tirages', 'bois'), 'packages-classique-numerique': () => familyPackages('numerique', 'classique'), 'packages-classique-tirages': () => familyPackages('tirages', 'classique'), options: optionsBlock };
 
 function walk(dir, out = []) {
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {

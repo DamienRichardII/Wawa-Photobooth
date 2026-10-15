@@ -105,3 +105,12 @@ textarea.input { min-height: 140px; resize: vertical; }
 .notfound .big { font-family: var(--font-serif); font-size: clamp(5rem, 16vw, 10rem); line-height: 1; background: var(--gold-grad-text); -webkit-background-clip: text; background-clip: text; color: transparent; margin: 0; }
 .notfound .lead { margin-inline: auto; }
 .mb-16 { margin-bottom: 16px; }
+
+/* Onglets modèle de Photobooth (prestations) */
+.booth-tabs{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin:0 0 2rem}
+.booth-tab{font:inherit;cursor:pointer;padding:.7rem 1.4rem;border-radius:999px;border:1px solid var(--gold,#b8964e);background:transparent;color:inherit;min-height:44px}
+.booth-tab[aria-selected="true"]{background:var(--gold,#b8964e);color:#fff}
+.booth-tab__tag{display:inline-block;margin-left:.4rem;padding:.1rem .5rem;border-radius:999px;font-size:.72em;background:#fff;color:var(--gold,#b8964e)}
+.booth-intro{display:grid;grid-template-columns:minmax(0,200px) 1fr;gap:1.5rem;align-items:center;padding:1.25rem;margin:0 0 2rem}
+.booth-intro img{width:100%;height:auto;border-radius:12px}
+@media (max-width:600px){.booth-intro{grid-template-columns:1fr}}

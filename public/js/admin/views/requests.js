@@ -60,7 +60,7 @@ export function render(box, params, rerender) {
         el('td', {}, [el('strong', { text: r.name || '—' }), el('span', { class: 'cell-sub', text: r.email || '' })]),
         el('td', {}, [EVENT_LABEL[r.event_type] || r.event_type, el('span', { class: 'cell-sub' }, flags(r).filter(Boolean).flatMap((t) => [t, ' ']))]),
         el('td', {}, [fmtDateShort(r.event_date), el('span', { class: 'cell-sub', text: `${r.start_time} · ${relDays(r.event_date)}` })]),
-        el('td', {}, [r.package_snapshot ? r.package_snapshot.name : (r.photobooth_requested ? '—' : 'Sans photobooth'), r.package_snapshot && r.package_snapshot.price_eur != null ? el('span', { class: 'cell-sub', text: `${r.package_snapshot.price_eur} €` }) : null]),
+        el('td', {}, [r.package_snapshot ? r.package_snapshot.name + (r.package_snapshot.booth === 'bois' ? ' · Boisé' : '') : (r.photobooth_requested ? '—' : 'Sans photobooth'), r.package_snapshot && r.package_snapshot.price_eur != null ? el('span', { class: 'cell-sub', text: `${r.package_snapshot.price_eur} €` }) : null]),
         el('td', {}, [badge(r.status), r.status === 'nouvelle' && hoursSince(r.created_at) > 24 ? el('span', { class: 'cell-sub', text: `en attente ${waiting(r.created_at)}` }) : null])
       ])))])]) : el('p', { class: 'empty card', text: state.requests.length ? 'Aucune demande ne correspond à ces filtres.' : 'Aucune demande pour le moment. Les nouvelles demandes apparaîtront ici automatiquement.' });
   } else {

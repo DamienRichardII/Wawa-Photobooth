@@ -29,7 +29,7 @@ export const STEPS = [
 export const FIELD_STEP = {
   event_type: 'event', event_type_other: 'event',
   event_address: 'place', address_place_id: 'place', installation_type: 'place',
-  photobooth_requested: 'photobooth', photobooth_package_id: 'package', magnet_bar_requested: 'magnets',
+  photobooth_requested: 'photobooth', photobooth_model: 'photobooth', photobooth_package_id: 'package', magnet_bar_requested: 'magnets',
   couple_first_names: 'details', event_date: 'details', start_time: 'details', guest_count: 'details',
   first_name: 'contact', last_name: 'contact', email: 'contact', phone: 'contact'
 };
